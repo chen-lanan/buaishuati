@@ -1,0 +1,12 @@
+.result-card { background: #176b87; color: #fff; border-radius: calc(28 * var(--rpx)); padding: calc(42 * var(--rpx)) calc(30 * var(--rpx)); text-align: center; margin-bottom: calc(26 * var(--rpx)); }
+.result-title { font-size: calc(36 * var(--rpx)); font-weight: 800; }
+.score { font-size: calc(124 * var(--rpx)); font-weight: 900; line-height: 1.15; margin-top: calc(26 * var(--rpx)); }
+.score-label { opacity: .8; }
+.result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: calc(34 * var(--rpx)); padding-top: calc(28 * var(--rpx)); border-top: calc(1 * var(--rpx)) solid rgba(255,255,255,.25); }
+.result-grid > view { display: flex; flex-direction: column; font-size: calc(24 * var(--rpx)); }
+.number { font-size: calc(38 * var(--rpx)); font-weight: 800; margin-bottom: calc(5 * var(--rpx)); }
+.detail-row { min-height: calc(82 * var(--rpx)); border-bottom: calc(2 * var(--rpx)) solid #edf2f3; }
+.detail-row:last-child { border: none; }
+.home-btn { margin-top: calc(18 * var(--rpx)); }
+
+.review-exam-btn { margin-bottom: calc(14 * var(--rpx)); }

@@ -1,0 +1,7 @@
+.stats-grid { gap: calc(18 * var(--rpx)); }
+.stat-card { background: #fff; border-radius: calc(20 * var(--rpx)); padding: calc(28 * var(--rpx)) calc(18 * var(--rpx)); display: flex; flex-direction: column; align-items: center; color: #6d8088; box-shadow: 0 calc(7 * var(--rpx)) calc(24 * var(--rpx)) rgba(23,107,135,.06); }
+.stat-card .num { font-size: calc(48 * var(--rpx)); font-weight: 800; color: #176b87; margin-bottom: calc(8 * var(--rpx)); }
+.day-row { min-height: calc(80 * var(--rpx)); display: flex; align-items: center; justify-content: space-between; border-bottom: calc(2 * var(--rpx)) solid #edf2f3; }
+.day-row:last-child { border: none; }
+.empty-small { text-align: center; color: #7b8b93; padding: calc(34 * var(--rpx)); }
+.metric-row{gap:20rpx}.metric-label{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

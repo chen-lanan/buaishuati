@@ -1,0 +1,483 @@
+/* 不爱刷题 v1.5.5 — flat Material You / Monet
+   Pure tonal colors only. No gradients, glass blur, glow, decorative dots or bright separators. */
+:root,
+html[data-monet-theme="ocean"] {
+  color-scheme: light;
+  --theme-accent: #5369a8;
+  --theme-on-accent: #ffffff;
+  --theme-accent-container: #dce2ff;
+  --theme-on-accent-container: #0d1b49;
+  --theme-accent-ink: #3b518f;
+  --theme-accent-soft: #e5e9ff;
+  --theme-accent-border: #bdc7ed;
+  --theme-bg: #fffbfe;
+  --theme-surface: #fffbfe;
+  --theme-surface-strong: #f6f1f6;
+  --theme-surface-high: #eee8ef;
+  --theme-surface-highest: #e7e1e8;
+  --theme-chip-bg: #e9e3eb;
+  --theme-text: #1d1b20;
+  --theme-muted: #49454f;
+  --theme-outline: #79747e;
+  --theme-divider: rgba(73, 69, 79, .09);
+  --theme-card-border: rgba(73, 69, 79, .12);
+  --theme-danger: #ba1a1a;
+  --theme-danger-container: #ffdad6;
+  --theme-warning: #725c00;
+  --theme-warning-container: #ffe08a;
+  --theme-success: #146c4c;
+  --theme-success-container: #a7f2cf;
+}
+html[data-monet-theme="violet"] { --theme-accent:#75558f; --theme-on-accent:#fff; --theme-accent-container:#f0dbff; --theme-on-accent-container:#2d0d47; --theme-accent-ink:#5b3c75; --theme-accent-soft:#f0e0f7; --theme-accent-border:#d4b9df; }
+html[data-monet-theme="mint"] { --theme-accent:#386b5c; --theme-on-accent:#fff; --theme-accent-container:#bcebd7; --theme-on-accent-container:#002117; --theme-accent-ink:#245447; --theme-accent-soft:#d4eee5; --theme-accent-border:#a9cec2; }
+html[data-monet-theme="rose"] { --theme-accent:#8c4f61; --theme-on-accent:#fff; --theme-accent-container:#ffd9e1; --theme-on-accent-container:#3a0719; --theme-accent-ink:#71394b; --theme-accent-soft:#f6e1e6; --theme-accent-border:#dbbdc5; }
+html[data-monet-theme="amber"] { --theme-accent:#735b23; --theme-on-accent:#fff; --theme-accent-container:#ffe08e; --theme-on-accent-container:#241a00; --theme-accent-ink:#5c4610; --theme-accent-soft:#f4e7c6; --theme-accent-border:#dac796; }
+
+html[data-appearance="dark"] {
+  color-scheme: dark;
+  --theme-bg:#1c1b1f; --theme-surface:#1c1b1f; --theme-surface-strong:#242126;
+  --theme-surface-high:#2b292d; --theme-surface-highest:#363438; --theme-chip-bg:#343137;
+  --theme-text:#e7e1e5; --theme-muted:#cac4d0; --theme-outline:#938f99;
+  --theme-divider:rgba(202,196,208,.08); --theme-card-border:rgba(202,196,208,.10);
+  --theme-danger:#ffb4ab; --theme-danger-container:#93000a;
+  --theme-warning:#e9c349; --theme-warning-container:#574500;
+  --theme-success:#8ed8b8; --theme-success-container:#005137;
+  --theme-accent:#b9c6ff; --theme-on-accent:#20356f; --theme-accent-container:#394f88;
+  --theme-on-accent-container:#dce2ff; --theme-accent-ink:#d6ddff; --theme-accent-soft:#333a50; --theme-accent-border:#59668d;
+}
+html[data-appearance="dark"][data-monet-theme="violet"] { --theme-accent:#d8b9f4; --theme-on-accent:#45265d; --theme-accent-container:#5d3d75; --theme-on-accent-container:#f0dbff; --theme-accent-ink:#ead4fb; --theme-accent-soft:#45384d; --theme-accent-border:#735a7f; }
+html[data-appearance="dark"][data-monet-theme="mint"] { --theme-accent:#9fd4c1; --theme-on-accent:#07372b; --theme-accent-container:#225043; --theme-on-accent-container:#bcebd7; --theme-accent-ink:#c5eddf; --theme-accent-soft:#2e403b; --theme-accent-border:#526f66; }
+html[data-appearance="dark"][data-monet-theme="rose"] { --theme-accent:#f4b7c5; --theme-on-accent:#542535; --theme-accent-container:#6f3a4a; --theme-on-accent-container:#ffd9e1; --theme-accent-ink:#ffd7df; --theme-accent-soft:#49383f; --theme-accent-border:#795d66; }
+html[data-appearance="dark"][data-monet-theme="amber"] { --theme-accent:#ddc274; --theme-on-accent:#3d2f00; --theme-accent-container:#574500; --theme-on-accent-container:#ffe08e; --theme-accent-ink:#f9de8a; --theme-accent-soft:#443d2e; --theme-accent-border:#756b4a; }
+
+html[data-appearance="amoled"] {
+  color-scheme: dark;
+  --theme-bg:#000000; --theme-surface:#000000; --theme-surface-strong:#090909;
+  --theme-surface-high:#111111; --theme-surface-highest:#191919; --theme-chip-bg:#171717;
+  --theme-text:#f2eef2; --theme-muted:#c9c3cb; --theme-outline:#938e96;
+  --theme-divider:rgba(255,255,255,.065); --theme-card-border:rgba(255,255,255,.09);
+  --theme-danger:#ffb4ab; --theme-danger-container:#4f0005;
+  --theme-warning:#e9c349; --theme-warning-container:#332800;
+  --theme-success:#8ed8b8; --theme-success-container:#003824;
+  --theme-accent:#c1caff; --theme-on-accent:#263a72; --theme-accent-container:#34477c;
+  --theme-on-accent-container:#dce2ff; --theme-accent-ink:#d7dcff; --theme-accent-soft:#202535; --theme-accent-border:#485371;
+}
+html[data-appearance="amoled"][data-monet-theme="violet"] { --theme-accent:#d8b9f4; --theme-on-accent:#45265d; --theme-accent-container:#513467; --theme-on-accent-container:#f0dbff; --theme-accent-ink:#ead4fb; --theme-accent-soft:#291f2d; --theme-accent-border:#604b69; }
+html[data-appearance="amoled"][data-monet-theme="mint"] { --theme-accent:#9fd4c1; --theme-on-accent:#07372b; --theme-accent-container:#19483a; --theme-on-accent-container:#bcebd7; --theme-accent-ink:#c5eddf; --theme-accent-soft:#172721; --theme-accent-border:#405d53; }
+html[data-appearance="amoled"][data-monet-theme="rose"] { --theme-accent:#f4b7c5; --theme-on-accent:#542535; --theme-accent-container:#633140; --theme-on-accent-container:#ffd9e1; --theme-accent-ink:#ffd7df; --theme-accent-soft:#2b2024; --theme-accent-border:#684d56; }
+html[data-appearance="amoled"][data-monet-theme="amber"] { --theme-accent:#ddc274; --theme-on-accent:#3d2f00; --theme-accent-container:#4c3c00; --theme-on-accent-container:#ffe08e; --theme-accent-ink:#f9de8a; --theme-accent-soft:#292514; --theme-accent-border:#635a39; }
+
+html, body, #app-shell, #page-root { background-color:var(--theme-bg)!important; color:var(--theme-text)!important; }
+body { background-image:none!important; }
+body::before, #app-bar::before, #page-root .card::before, #page-root .action-card::before,
+#page-root[data-page="pages/home/home"] .hero::before, #page-root[data-page="pages/home/home"] .hero::after { display:none!important; }
+#app-bar { background:var(--theme-surface)!important; color:var(--theme-text)!important; border-bottom:1px solid var(--theme-divider)!important; box-shadow:none!important; backdrop-filter:none!important; }
+#app-title, #back-button { color:var(--theme-text)!important; }
+#app-bar .global-action-button { background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important; border-color:var(--theme-accent-border)!important; box-shadow:none!important; }
+#app-bar .global-action-button.active { background:var(--theme-accent)!important; color:var(--theme-on-accent)!important; border-color:transparent!important; }
+#back-button { background:transparent!important; border:0!important; border-radius:calc(14 * var(--rpx))!important; box-shadow:none!important; }
+#back-button:active { background:var(--theme-surface-high)!important; }
+
+
+/* Tonal surfaces */
+#page-root .card, #page-root .action-card, #page-root .question-card, #page-root .question-block,
+#page-root .sheet-panel, #page-root .answer-panel, #page-root .analysis, #page-root .feedback,
+#page-root .option, #page-root .review-item, #page-root .mastered-item, #page-root .item,
+#page-root .summary, #page-root .bulk-add-card, #page-root .parse-card, #page-root .mode-card,
+#page-root .privacy, #page-root .warning-card, #page-root .diagnostic-card, #page-root .source-card,
+#page-root .result-card, #page-root .issue-card, #page-root .tips-card, #page-root .appearance-card,
+#page-root .storage-card, #page-root .menu, #page-root .bank, #page-root .memory-card,
+#page-root .memorize-card, #page-root .stat-card {
+  background:var(--theme-surface-strong)!important; color:var(--theme-text)!important;
+  border-color:var(--theme-card-border)!important; box-shadow:none!important; backdrop-filter:none!important;
+}
+#page-root .question-block, #page-root .option, #page-root .answer-panel, #page-root .analysis,
+#page-root .feedback, #page-root .raw-box, #page-root .upload-box, #page-root .mode-option,
+#page-root .edit-search-box, #page-root .mastered-search, #page-root .bank-actions,
+#page-root .selected-actions, #page-root .bottom-actions, #page-root .exam-top,
+#page-root .sheet-item, #page-root .hybrid-note, #page-root .amoled-subsetting {
+  background:var(--theme-surface-high)!important; color:var(--theme-text)!important;
+  border-color:var(--theme-card-border)!important; box-shadow:none!important; backdrop-filter:none!important;
+}
+
+/* Text hierarchy; hero/primary containers are overridden below. */
+#page-root .title, #page-root .section-title, #page-root .section-heading, #page-root .setting-title,
+#page-root .action-title, #page-root .name, #page-root .bank-name, #page-root .question,
+#page-root .question-text, #page-root .option-text, #page-root .answer-text, #page-root .analysis-text,
+#page-root .answer-line, #page-root .memory-title, #page-root .mastered-question, #page-root .section,
+#page-root .warning-title, #page-root .raw-label, #page-root .mode-title, #page-root .upload-title,
+#page-root .privacy-title, #page-root .bulk-add-title, #page-root .success-title { color:var(--theme-text)!important; }
+#page-root .subtitle, #page-root .muted, #page-root .action-desc, #page-root .paragraph,
+#page-root .mode-desc, #page-root .upload-desc, #page-root .mastered-bank, #page-root .mastered-tip,
+#page-root .storage-summary, #page-root .result-summary, #page-root .filter-hint,
+#page-root .raw-line, #page-root .mastered-count { color:var(--theme-muted)!important; }
+
+/* Inputs */
+#page-root .input, #page-root .textarea, #page-root .picker-box, #page-root input,
+#page-root textarea, .modal-input { background:var(--theme-surface-high)!important; color:var(--theme-text)!important; border-color:var(--theme-card-border)!important; box-shadow:none!important; }
+#page-root input::placeholder, #page-root textarea::placeholder, .modal-input::placeholder { color:var(--theme-muted)!important; opacity:.74; }
+
+/* Buttons, chips and toggles */
+#page-root .btn-primary, #page-root .nav-btn.primary, #page-root .submit-exam, #page-root .parse-button,
+#page-root .bulk-add-btn, #page-root .progress-value { background:var(--theme-accent)!important; color:var(--theme-on-accent)!important; border-color:transparent!important; box-shadow:none!important; }
+#page-root .btn-secondary, #page-root .btn-ghost, #page-root .nav-btn, #page-root .storage-btn,
+#page-root .delay-picker, #page-root .restore-btn, #page-root .small-ghost, #page-root .enter-btn {
+  background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important; border-color:var(--theme-accent-border)!important; box-shadow:none!important;
+}
+#page-root .delete-btn, #page-root .danger-btn { background:var(--theme-danger-container)!important; color:var(--theme-danger)!important; border-color:transparent!important; }
+#page-root .tag:not(.top-chip), #page-root .filter-chip, #page-root .appearance-option, #page-root .monet-option {
+  background:var(--theme-chip-bg)!important; color:var(--theme-muted)!important; border-color:transparent!important; box-shadow:none!important;
+}
+#page-root .filter-chip.active, #page-root .appearance-option.active, #page-root .monet-option.active, #page-root .tag.active {
+  background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important; border-color:var(--theme-accent-border)!important;
+}
+#page-root .filter-chip.error-active, #page-root .tag-error { background:var(--theme-danger-container)!important; color:var(--theme-danger)!important; }
+#page-root .tag-warn { background:var(--theme-warning-container)!important; color:var(--theme-warning)!important; }
+#page-root .progress-track { background:var(--theme-surface-highest)!important; }
+.wx-switch-track { background:var(--theme-surface-highest)!important; box-shadow:none!important; }
+.wx-switch-thumb { background:var(--theme-outline)!important; box-shadow:none!important; }
+.wx-switch input:checked + .wx-switch-track { background:var(--theme-accent)!important; }
+.wx-switch input:checked + .wx-switch-track .wx-switch-thumb { background:var(--theme-on-accent)!important; }
+.wx-slider { accent-color:var(--theme-accent)!important; }
+
+/* Home hero */
+#page-root[data-page="pages/home/home"] .hero { background:var(--theme-accent)!important; color:var(--theme-on-accent)!important; border-color:transparent!important; box-shadow:none!important; }
+#page-root[data-page="pages/home/home"] .hero * { color:var(--theme-on-accent)!important; }
+#page-root[data-page="pages/home/home"] .action-card:nth-child(n) { background:var(--theme-surface-strong)!important; }
+#page-root[data-page="pages/home/home"] .action-icon { color:var(--theme-accent)!important; }
+
+/* Bank detail: explicit contrast in every appearance mode. */
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card {
+  background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important;
+  border:1px solid var(--theme-accent-border)!important; box-shadow:none!important;
+}
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .title,
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .subtitle,
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .question-count,
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .count-label,
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .type-row,
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .type-row * { color:var(--theme-on-accent-container)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .subtitle { opacity:.76; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .header-card .type-row { border-top-color:var(--theme-accent-border)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .grid-2 .mode-card {
+  background:var(--theme-surface-strong)!important;
+  color:var(--theme-text)!important;
+  border:1px solid var(--theme-card-border)!important;
+}
+#page-root[data-page="pages/bank-detail/bank-detail"] .grid-2 .mode-card .mode-title { color:var(--theme-text)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .grid-2 .mode-card .mode-desc { color:var(--theme-muted)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .memorize-card { background:var(--theme-warning-container)!important; color:var(--theme-warning)!important; border-color:var(--theme-warning)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .memorize-card .mode-title,
+#page-root[data-page="pages/bank-detail/bank-detail"] .memorize-card .mode-desc,
+#page-root[data-page="pages/bank-detail/bank-detail"] .memorize-arrow { color:var(--theme-warning)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .tool-row { background:var(--theme-surface-high)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .tool-row + .tool-row { border-top:0!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .reimport-warning { background:var(--theme-warning-container)!important; border-color:var(--theme-warning)!important; }
+#page-root[data-page="pages/bank-detail/bank-detail"] .reimport-warning .warning-title,
+#page-root[data-page="pages/bank-detail/bank-detail"] .reimport-warning .subtitle { color:var(--theme-warning)!important; }
+
+/* Import and bank management */
+#page-root[data-page="pages/import/import"] .upload-box { background:var(--theme-surface-high)!important; border-color:var(--theme-outline)!important; }
+#page-root[data-page="pages/import/import"] .upload-box.ready { background:var(--theme-accent-container)!important; border-color:var(--theme-accent)!important; }
+#page-root[data-page="pages/import/import"] .upload-icon { color:var(--theme-accent)!important; }
+#page-root[data-page="pages/import/import"] .mode-option.active { background:var(--theme-accent-container)!important; border-color:var(--theme-accent)!important; }
+#page-root[data-page="pages/import/import"] .hybrid-note { background:var(--theme-warning-container)!important; color:var(--theme-warning)!important; }
+#page-root[data-page="pages/banks/banks"] .bank-actions { background:var(--theme-surface-high)!important; border-top-color:var(--theme-divider)!important; }
+
+/* Review */
+#page-root[data-page="pages/review/review"] .summary { background:var(--theme-surface-strong)!important; }
+#page-root[data-page="pages/review/review"] .answer-preview { background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important; }
+#page-root[data-page="pages/review/review"] .raw-box { background:var(--theme-surface-high)!important; border:1px solid var(--theme-card-border)!important; }
+#page-root[data-page="pages/review/review"] .raw-line { color:var(--theme-muted)!important; border-left-color:var(--theme-accent)!important; }
+#page-root[data-page="pages/review/review"] .issue, #page-root[data-page="pages/review/review"] .repair-note { color:var(--theme-warning)!important; }
+
+/* Sticky/search surfaces */
+#page-root[data-page="pages/mastered/mastered"] .mastered-sticky { background:var(--theme-bg)!important; border-bottom-color:var(--theme-divider)!important; backdrop-filter:none!important; }
+#page-root[data-page="pages/mastered/mastered"] .mastered-search { background:var(--theme-surface-high)!important; color:var(--theme-text)!important; }
+
+/* Practice, memorize and exam */
+#page-root .practice-page, #page-root .exam-page { background:transparent!important; color:var(--theme-text)!important; }
+#page-root .topbar, #page-root .exam-top, #page-root .bottom-actions { background:var(--theme-bg)!important; color:var(--theme-text)!important; border-color:var(--theme-divider)!important; box-shadow:none!important; }
+#page-root .option-key { background:var(--theme-chip-bg)!important; color:var(--theme-text)!important; }
+#page-root .option.selected { background:var(--theme-accent-container)!important; border-color:var(--theme-accent)!important; }
+#page-root .option.selected .option-key { background:var(--theme-accent)!important; color:var(--theme-on-accent)!important; }
+#page-root .option.correct { background:var(--theme-success-container)!important; border-color:var(--theme-success)!important; }
+#page-root .option.correct .option-key { background:var(--theme-success)!important; color:#fff!important; }
+#page-root .option.wrong { background:var(--theme-danger-container)!important; border-color:var(--theme-danger)!important; }
+#page-root .option.wrong .option-key { background:var(--theme-danger)!important; color:#fff!important; }
+#page-root .answer-panel { border-left-color:var(--theme-accent)!important; }
+#page-root .mastered, #page-root .master-question-btn { background:var(--theme-success-container)!important; color:var(--theme-success)!important; }
+#page-root .vague, #page-root .memory-tag { background:var(--theme-warning-container)!important; color:var(--theme-warning)!important; }
+#page-root .unknown { background:var(--theme-danger-container)!important; color:var(--theme-danger)!important; }
+
+/* Subtle separators: no bright white rules in dark mode. */
+#page-root .setting-row, #page-root .menu-row, #page-root .storage-row,
+#page-root .memory-rating, #page-root .bank-actions, #page-root .bottom-actions,
+#page-root .exam-top { border-color:var(--theme-divider)!important; }
+#page-root .setting-row, #page-root .menu-row, #page-root .storage-row { border-bottom-width:1px!important; }
+
+/* Flat swatches */
+#page-root .monet-swatch { box-shadow:0 0 0 2px var(--theme-card-border)!important; }
+#page-root .monet-ocean { background:#7c8fc9!important; }
+#page-root .monet-violet { background:#a883c8!important; }
+#page-root .monet-mint { background:#74a99a!important; }
+#page-root .monet-rose { background:#c48798!important; }
+#page-root .monet-amber { background:#b99a65!important; }
+#page-root .monet-check { color:var(--theme-accent)!important; }
+
+/* Dialogs and toasts */
+#loading-layer, #modal-layer { background:rgba(0,0,0,.52)!important; backdrop-filter:none!important; }
+.loading-card, .modal-card { background:var(--theme-surface-high)!important; color:var(--theme-text)!important; border-color:var(--theme-card-border)!important; box-shadow:none!important; }
+.modal-title { color:var(--theme-text)!important; }
+.modal-content { color:var(--theme-muted)!important; }
+.modal-btn { background:var(--theme-surface-highest)!important; color:var(--theme-text)!important; }
+.modal-btn.confirm { background:var(--theme-accent)!important; color:var(--theme-on-accent)!important; }
+.picker-modal-card { background:var(--theme-surface-strong)!important; border-color:var(--theme-card-border)!important; }
+.picker-modal-header { border-bottom:1px solid var(--theme-divider)!important; }
+.picker-modal-close { background:var(--theme-surface-high)!important; color:var(--theme-text)!important; }
+.picker-item { background:var(--theme-surface-high)!important; color:var(--theme-text)!important; border-color:var(--theme-card-border)!important; }
+.picker-item.active { background:var(--theme-accent-soft)!important; color:var(--theme-accent-ink)!important; border-color:var(--theme-accent-border)!important; box-shadow:inset 0 0 0 1px var(--theme-accent-border)!important; }
+.picker-item-check { color:var(--theme-accent)!important; }
+.toast { background:var(--theme-surface-highest)!important; color:var(--theme-text)!important; box-shadow:none!important; backdrop-filter:none!important; }
+.spinner { border-color:var(--theme-divider)!important; border-top-color:var(--theme-accent)!important; }
+
+/* AMOLED: only large backgrounds are absolute black; raised controls remain distinguishable. */
+html[data-appearance="amoled"], html[data-appearance="amoled"] body,
+html[data-appearance="amoled"] #app-shell, html[data-appearance="amoled"] #page-root,
+html[data-appearance="amoled"] #app-bar { background-color:#000!important; }
+
+/* Additional consistency pass: status cards, results and statistics use the same tonal system. */
+#page-root[data-page="pages/home/home"] .mastered-card {
+  background: var(--theme-success-container) !important;
+  color: var(--theme-success) !important;
+}
+#page-root[data-page="pages/home/home"] .mastered-card .action-title,
+#page-root[data-page="pages/home/home"] .mastered-card .action-desc,
+#page-root[data-page="pages/home/home"] .mastered-card .arrow { color: var(--theme-success) !important; }
+#page-root[data-page="pages/home/home"] .mastered-card-icon {
+  background: var(--theme-surface-high) !important;
+  color: var(--theme-success) !important;
+  box-shadow: none !important;
+}
+
+#page-root[data-page="pages/import-result/import-result"] .normal {
+  background: var(--theme-success-container) !important;
+  color: var(--theme-success) !important;
+}
+#page-root[data-page="pages/import-result/import-result"] .warn,
+#page-root[data-page="pages/import-result/import-result"] .replace-notice {
+  background: var(--theme-warning-container) !important;
+  color: var(--theme-warning) !important;
+  border-color: var(--theme-warning) !important;
+  background-image: none !important;
+}
+#page-root[data-page="pages/import-result/import-result"] .err,
+#page-root[data-page="pages/import/import"] .model-status.failed {
+  background: var(--theme-danger-container) !important;
+  color: var(--theme-danger) !important;
+}
+#page-root[data-page="pages/import-result/import-result"] .diagnostic-grid > view {
+  background: var(--theme-surface-high) !important;
+  color: var(--theme-muted) !important;
+}
+#page-root[data-page="pages/import-result/import-result"] .diag-number,
+#page-root[data-page="pages/import-result/import-result"] .count-total { color: var(--theme-accent) !important; }
+#page-root[data-page="pages/import-result/import-result"] .parse-mode-tag.rule {
+  background: var(--theme-accent-container) !important;
+  color: var(--theme-on-accent-container) !important;
+}
+#page-root[data-page="pages/import-result/import-result"] .parse-mode-tag.ai {
+  background: var(--theme-success-container) !important;
+  color: var(--theme-success) !important;
+}
+
+#page-root[data-page="pages/result/result"] .result-card {
+  background: var(--theme-accent-container) !important;
+  color: var(--theme-on-accent-container) !important;
+  border-color: var(--theme-accent-border) !important;
+  background-image: none !important;
+}
+#page-root[data-page="pages/result/result"] .result-card * { color: var(--theme-on-accent-container) !important; }
+#page-root[data-page="pages/result/result"] .result-grid { border-top-color: var(--theme-accent-border) !important; }
+#page-root[data-page="pages/result/result"] .detail-row,
+#page-root[data-page="pages/statistics/statistics"] .day-row { border-bottom-color: var(--theme-divider) !important; }
+#page-root[data-page="pages/wrong/wrong"] .intro {
+  background: var(--theme-danger-container) !important;
+  color: var(--theme-danger) !important;
+}
+#page-root[data-page="pages/statistics/statistics"] .stat-card .num { color: var(--theme-accent) !important; }
+#page-root[data-page="pages/statistics/statistics"] .empty-small { color: var(--theme-muted) !important; }
+
+/* Practice result panels: no gray shadow strip or high-contrast dashed rule. */
+#page-root[data-page="pages/practice/practice"] .feedback,
+#page-root[data-page="pages/practice/practice"] .answer-panel,
+#page-root[data-page="pages/practice/practice"] .analysis {
+  background: var(--theme-surface-high) !important;
+  background-image: none !important;
+  border-color: var(--theme-card-border) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  background-clip: border-box !important;
+}
+#page-root[data-page="pages/practice/practice"] .answer-panel { border-left-color: var(--theme-accent) !important; }
+#page-root[data-page="pages/practice/practice"] .memory-rating {
+  border-top: 1px solid var(--theme-divider) !important;
+}
+#page-root[data-page="pages/practice/practice"] .score-btn.rated {
+  outline-color: var(--theme-accent) !important;
+}
+#page-root[data-page="pages/practice/practice"] .source,
+#page-root[data-page="pages/practice/practice"] .auto-next-hint { color: var(--theme-muted) !important; }
+
+/* Remove residual page-specific gradient images without touching actual question images. */
+#page-root .hero, #page-root .header-card, #page-root .result-card,
+#page-root .mastered-card, #page-root .replace-notice, #page-root .question-block,
+#page-root .feedback, #page-root .answer-panel, #page-root .analysis,
+#page-root .progress-value, #page-root .upload-box.ready, #page-root .memorize-card,
+#page-root .btn-primary, #page-root .btn-secondary, #page-root .nav-btn,
+#page-root .submit-exam, #page-root .modal-btn { background-image: none !important; }
+#page-root .resume-row,
+#page-root .switch-row { border-color: var(--theme-divider) !important; }
+
+/* v1.6.2: 搜索栏外层必须跟随当前主题，避免深色模式出现白色矩形底框。 */
+#page-root[data-page="pages/search/search"] .search-head {
+  background: var(--theme-bg) !important;
+  border-bottom-color: var(--theme-divider) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+#page-root[data-page="pages/search/search"] .search-input {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  outline: none !important;
+}
+#page-root[data-page="pages/review/review"] .edit-search-wrap {
+  background: var(--theme-bg) !important;
+  backdrop-filter: none !important;
+}
+#page-root[data-page="pages/review/review"] .edit-search-box,
+#page-root[data-page="pages/review/review"] .edit-search-input {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  outline: none !important;
+}
+
+/* v1.6.7 practice answer sheet */
+#page-root[data-page="pages/practice/practice"] .sheet-open-btn,
+#page-root[data-page="pages/exam/exam"] .sheet-button {
+  background: var(--theme-accent-container) !important;
+  color: var(--theme-on-accent-container) !important;
+  border-color: var(--theme-accent) !important;
+  box-shadow: none !important;
+}
+#page-root[data-page="pages/practice/practice"] .edit-question-btn,
+#page-root[data-page="pages/exam/exam"] .edit-question-btn {
+  background: var(--theme-chip-bg) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-card-border) !important;
+  box-shadow: none !important;
+}
+#page-root[data-page="pages/practice/practice"] .practice-sheet-panel {
+  background: var(--theme-surface-strong) !important;
+  color: var(--theme-text) !important;
+  border-color: var(--theme-card-border) !important;
+}
+#page-root[data-page="pages/practice/practice"] .practice-sheet-close,
+#page-root[data-page="pages/practice/practice"] .practice-sheet-number.sheet-unanswered {
+  background: var(--theme-surface-high) !important;
+  color: var(--theme-muted) !important;
+}
+#page-root[data-page="pages/practice/practice"] .practice-sheet-subtitle,
+#page-root[data-page="pages/practice/practice"] .practice-sheet-legend {
+  color: var(--theme-muted) !important;
+}
+
+/* v1.9.5: fixed role colors and a blue-to-red abnormal warning clipped to the pill itself. */
+:root {
+  --chip-blue-bg:#dce7ff; --chip-blue-text:#284b82; --chip-blue-border:#8daee8;
+  --chip-violet-bg:#ecddff; --chip-violet-text:#60367f; --chip-violet-border:#bc92e2;
+  --chip-amber-bg:#ffedb8; --chip-amber-text:#684d00; --chip-amber-border:#d7ae45;
+  --chip-rose-bg:#ffe0ea; --chip-rose-text:#793047; --chip-rose-border:#df93ad;
+  --chip-cyan-bg:#d7f1f3; --chip-cyan-text:#245b61; --chip-cyan-border:#8ec8cc;
+  --abnormal-blue-bg:#3564a8; --abnormal-blue-border:#a9c5ff;
+  --abnormal-red-bg:#ff332b; --abnormal-red-border:#ffd0cc;
+  --abnormal-chip-text:#ffffff;
+}
+html[data-appearance="dark"] {
+  --chip-blue-bg:#263d66; --chip-blue-text:#e0e9ff; --chip-blue-border:#718fbd;
+  --chip-violet-bg:#453054; --chip-violet-text:#f2dcff; --chip-violet-border:#906daa;
+  --chip-amber-bg:#4d3e18; --chip-amber-text:#ffe7a0; --chip-amber-border:#9b7d35;
+  --chip-rose-bg:#52303c; --chip-rose-text:#ffdee7; --chip-rose-border:#a6667a;
+  --chip-cyan-bg:#1b4044; --chip-cyan-text:#c2edf0; --chip-cyan-border:#537f84;
+  --abnormal-blue-bg:#315c9a; --abnormal-blue-border:#9dbbfa;
+  --abnormal-red-bg:#ff453a; --abnormal-red-border:#ffc2bd;
+  --abnormal-chip-text:#ffffff;
+}
+html[data-appearance="amoled"] {
+  --chip-blue-bg:#172a49; --chip-blue-text:#e0e9ff; --chip-blue-border:#5e7ead;
+  --chip-violet-bg:#2e2039; --chip-violet-text:#f2dcff; --chip-violet-border:#74548a;
+  --chip-amber-bg:#302509; --chip-amber-text:#ffe7a0; --chip-amber-border:#7e6428;
+  --chip-rose-bg:#351c25; --chip-rose-text:#ffdee7; --chip-rose-border:#844d60;
+  --chip-cyan-bg:#0e2a2d; --chip-cyan-text:#c2edf0; --chip-cyan-border:#3e696e;
+  --abnormal-blue-bg:#244b82; --abnormal-blue-border:#82a8ec;
+  --abnormal-red-bg:#ff453a; --abnormal-red-border:#ffb3ad;
+  --abnormal-chip-text:#ffffff;
+}
+#page-root[data-page="pages/practice/practice"] .top-chip,
+#page-root[data-page="pages/exam/exam"] .top-chip {
+  position:relative;
+  border-width:calc(2 * var(--rpx))!important;
+  border-style:solid!important;
+  opacity:1!important;
+}
+#page-root[data-page="pages/practice/practice"] .top-chip:not(.abnormal-type-tag),
+#page-root[data-page="pages/exam/exam"] .top-chip:not(.abnormal-type-tag) { box-shadow:none!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.chip-tone-blue:not(.abnormal-type-tag), #page-root[data-page="pages/exam/exam"] .top-chip.chip-tone-blue:not(.abnormal-type-tag) { background:var(--chip-blue-bg)!important; color:var(--chip-blue-text)!important; border-color:var(--chip-blue-border)!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.chip-tone-violet:not(.abnormal-type-tag), #page-root[data-page="pages/exam/exam"] .top-chip.chip-tone-violet:not(.abnormal-type-tag) { background:var(--chip-violet-bg)!important; color:var(--chip-violet-text)!important; border-color:var(--chip-violet-border)!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.chip-tone-amber:not(.abnormal-type-tag), #page-root[data-page="pages/exam/exam"] .top-chip.chip-tone-amber:not(.abnormal-type-tag) { background:var(--chip-amber-bg)!important; color:var(--chip-amber-text)!important; border-color:var(--chip-amber-border)!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.chip-tone-rose:not(.abnormal-type-tag), #page-root[data-page="pages/exam/exam"] .top-chip.chip-tone-rose:not(.abnormal-type-tag) { background:var(--chip-rose-bg)!important; color:var(--chip-rose-text)!important; border-color:var(--chip-rose-border)!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.chip-tone-cyan:not(.abnormal-type-tag), #page-root[data-page="pages/exam/exam"] .top-chip.chip-tone-cyan:not(.abnormal-type-tag) { background:var(--chip-cyan-bg)!important; color:var(--chip-cyan-text)!important; border-color:var(--chip-cyan-border)!important; }
+#page-root[data-page="pages/practice/practice"] .top-chip.abnormal-type-tag,
+#page-root[data-page="pages/exam/exam"] .top-chip.abnormal-type-tag {
+  color:var(--abnormal-chip-text)!important;
+  animation:abnormalChipBlueRed 2.1s ease-in-out infinite!important;
+  will-change:background-color,border-color,box-shadow;
+  /* Keep every warning effect inside the pill. An outer blur can visually
+     spill across the progress bar and adjacent chips on light themes. */
+  box-shadow:inset 0 0 0 0 rgba(255,69,58,0)!important;
+}
+@keyframes abnormalChipBlueRed {
+  0%,28%,100% {
+    background-color:var(--abnormal-blue-bg);
+    border-color:var(--abnormal-blue-border);
+    box-shadow:inset 0 0 0 0 rgba(255,69,58,0);
+  }
+  48%,76% {
+    background-color:var(--abnormal-red-bg);
+    border-color:var(--abnormal-red-border);
+    box-shadow:
+      inset 0 0 0 calc(2 * var(--rpx)) rgba(255,255,255,.22),
+      inset 0 0 calc(12 * var(--rpx)) rgba(255,210,206,.36);
+  }
+}
+
+#page-root[data-page="pages/editor/editor"] .type-manager-mask { background:rgba(0,0,0,.62)!important; }
+#page-root[data-page="pages/editor/editor"] .type-manager-card {
+  background:var(--theme-surface-strong)!important;
+  color:var(--theme-text)!important;
+  border-color:var(--theme-card-border)!important;
+}
+#page-root[data-page="pages/editor/editor"] .type-manager-title,
+#page-root[data-page="pages/editor/editor"] .type-manager-card .field-label,
+#page-root[data-page="pages/editor/editor"] .custom-type-name { color:var(--theme-text)!important; }
+#page-root[data-page="pages/editor/editor"] .type-manager-card .subtitle,
+#page-root[data-page="pages/editor/editor"] .custom-type-meta,
+#page-root[data-page="pages/editor/editor"] .empty-custom { color:var(--theme-muted)!important; }
+#page-root[data-page="pages/editor/editor"] .type-manager-close,
+#page-root[data-page="pages/editor/editor"] .custom-cancel-edit { background:var(--theme-surface-highest)!important; color:var(--theme-text)!important; }
+#page-root[data-page="pages/editor/editor"] .custom-type-row,
+#page-root[data-page="pages/editor/editor"] .empty-custom { background:var(--theme-surface-high)!important; border-color:var(--theme-card-border)!important; }
+#page-root[data-page="pages/editor/editor"] .custom-edit { background:var(--theme-accent-container)!important; color:var(--theme-on-accent-container)!important; border-color:var(--theme-accent-border)!important; }
+#page-root[data-page="pages/editor/editor"] .custom-delete { background:var(--theme-danger-container)!important; color:var(--theme-danger)!important; }
+#page-root[data-page="pages/editor/editor"] .type-manager-card .divider { background:var(--theme-divider)!important; }
+

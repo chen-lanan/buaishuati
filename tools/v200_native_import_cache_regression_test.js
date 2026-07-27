@@ -1,0 +1,27 @@
+const fs = require('fs');
+const path = require('path');
+const root = path.resolve(__dirname, '..');
+const read = rel => fs.readFileSync(path.join(root, rel), 'utf8');
+const constants = read('miniapp-source/utils/constants.js');
+const importer = read('miniapp-source/services/docx-importer.js');
+const importPage = read('miniapp-source/pages/import/import.js');
+const storage = read('miniapp-source/services/bank-storage.js');
+const settings = read('miniapp-source/pages/settings/settings.js');
+const wxml = read('miniapp-source/pages/settings/settings.wxml');
+const gradle = read('app/build.gradle');
+function assert(ok, message) { if (!ok) throw new Error(message); }
+assert(/versionCode\s+200/.test(gradle), 'versionCode 200 missing');
+assert(/versionName\s+'2\.0\.0'/.test(gradle), 'versionName 2.0.0 missing');
+assert(/PICKED_FILE_CACHE_DIR/.test(constants), 'native picked-file cache path missing');
+assert(/function releasePickedFile\(/.test(importer), 'picked-file release helper missing');
+assert(/isNativePickedFilePath/.test(importer), 'picked-file path guard missing');
+assert(/finally\s*\{[\s\S]*releasePickedFile\(selectedFile\)/.test(importPage), 'import completion does not release selected copy');
+assert(/clearFile\(\)[\s\S]*releasePickedFile\(this\.selectedFile\)/.test(importPage), 'clear selection does not release selected copy');
+assert(/onUnload\(\)[\s\S]*releasePickedFile\(this\.selectedFile\)/.test(importPage), 'leaving import page does not release selected copy');
+assert(/function cleanupPickedFileCache\(/.test(storage), 'startup/deep picked cache cleanup missing');
+assert(/pickedCacheBytes/.test(storage), 'storage summary does not expose picked cache');
+assert(/fileUtil\.directorySize\(PICKED_FILE_CACHE_DIR\)/.test(storage), 'picked cache not counted');
+assert(/cleanupTemporaryFiles\(\)[\s\S]*cleanupPickedFileCache/.test(storage), 'temporary cleanup does not include picked cache');
+assert(/系统文件选择缓存/.test(settings), 'cleanup explanation missing native cache');
+assert(/系统文件选择缓存/.test(wxml), 'storage UI does not show native cache');
+console.log('v2.0.0 native import cache regression passed');

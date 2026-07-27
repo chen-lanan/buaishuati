@@ -1,0 +1,10 @@
+.field { margin-bottom: calc(28 * var(--rpx)); }
+.field:last-child { margin-bottom: 0; }
+.label { font-weight: 700; margin-bottom: calc(14 * var(--rpx)); }
+.note { background: #eef8f8; }
+.note-title { font-weight: 700; color: #176b87; }
+.resume-row { display: flex; justify-content: space-between; align-items: center; padding-top: calc(24 * var(--rpx)); border-top: calc(2 * var(--rpx)) solid #edf2f3; }
+
+.type-tip { margin-top: calc(10 * var(--rpx)); font-size: calc(22 * var(--rpx)); }
+
+.restart-note { margin-top: calc(18 * var(--rpx)); padding: calc(16 * var(--rpx)); border-radius: calc(14 * var(--rpx)); background: var(--theme-warning-container, #fff1c3); color: var(--theme-warning, #725c00); font-size: calc(23 * var(--rpx)); line-height: 1.55; }

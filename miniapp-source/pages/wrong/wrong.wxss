@@ -1,0 +1,4 @@
+.intro { background: #fff6f2; }
+.group { display: flex; align-items: center; justify-content: space-between; }
+.name { font-size: calc(31 * var(--rpx)); font-weight: 700; }
+.arrow { font-size: calc(46 * var(--rpx)); color: #8aa0aa; }

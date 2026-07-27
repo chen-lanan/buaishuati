@@ -1,0 +1,59 @@
+<view class="container safe-bottom" wx:if="{{manifest}}">
+  <view class="card">
+    <view class="title">{{modeName}}</view>
+    <view class="subtitle">{{manifest.name}} · 共 {{manifest.questionCount}} 题</view>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="label">题型</view>
+      <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange">
+        <view class="picker-box">{{typeOptions[typeIndex].label}} ›</view>
+        <view class="subtitle type-tip" wx:if="{{typeOptions[typeIndex].value === 'all'}}">包含当前题库全部可进入的正常题和异常题；需要只看异常时可单独选择“异常题”。</view>
+      </picker>
+    </view>
+
+    <view class="field" wx:if="{{mode === 'wrong'}}">
+      <view class="label">错题顺序</view>
+      <picker mode="selector" range="{{wrongOrderOptions}}" range-key="label" value="{{wrongOrderIndex}}" bindchange="onWrongOrderChange">
+        <view class="picker-box">{{wrongOrderOptions[wrongOrderIndex].label}} ›</view>
+      </picker>
+      <view class="subtitle type-tip">可按原题库顺序重练，也可随机打乱错题。</view>
+    </view>
+
+
+    <view class="field" wx:if="{{mode === 'memorize'}}">
+      <view class="label">背题顺序</view>
+      <picker mode="selector" range="{{memorizeOrderOptions}}" range-key="label" value="{{memorizeOrderIndex}}" bindchange="onMemorizeOrderChange">
+        <view class="picker-box">{{memorizeOrderOptions[memorizeOrderIndex].label}} ›</view>
+      </picker>
+      <view class="subtitle type-tip">顺序背题与随机背题分别保存进度；随机背题可继续上次随机顺序，也可关闭继续后重新随机。</view>
+    </view>
+
+    <view class="field">
+      <view class="label">练习数量</view>
+      <picker mode="selector" range="{{countLabels}}" value="{{countIndex}}" bindchange="onCountChange">
+        <view class="picker-box">{{countLabels[countIndex]}} ›</view>
+      </picker>
+    </view>
+
+    <view class="resume-row" wx:if="{{(mode === 'sequence' && progressCursor) || (mode === 'memorize' && memorizeProgressCursor)}}">
+      <view>
+        <view class="label">{{mode === 'memorize' && memorizeOrderOptions[memorizeOrderIndex].value === 'random' ? '继续上次随机背题' : '继续上次进度'}}</view>
+        <view class="subtitle">{{mode === 'memorize' ? (memorizeOrderOptions[memorizeOrderIndex].value === 'random' ? '保留上次随机顺序和浏览位置' : '从上次浏览位置继续背题') : '从上次完成题目的下一题继续'}}</view>
+      </view>
+      <switch checked="{{resume}}" color="#176B87" bindchange="onResumeChange" />
+    </view>
+    <view class="restart-note" wx:if="{{mode === 'sequence' && progressCursor && !resume && settings.resetWrongOnRestart}}">
+      从头开始时将清除当前题库的错题记录；开始前会再次确认。
+    </view>
+  </view>
+
+  <view class="card note">
+    <view class="note-title">{{mode === 'memorize' ? '背题规则' : '答题规则'}}</view>
+    <view class="subtitle" wx:if="{{mode === 'memorize'}}">进入后直接显示正确答案和解析；顺序背题与随机背题分别保存进度。随机背题关闭“继续”后会重新洗牌；选项始终保持原题库顺序。</view>
+    <view class="subtitle" wx:else>单选和判断点击后立即显示答案与解析；多选提交后显示。启用“答对自动下一题”时，只在答对后按设定延时跳转。</view>
+  </view>
+
+  <button class="btn-primary" bindtap="start">开始{{mode === 'memorize' ? '背题' : '练习'}}</button>
+</view>

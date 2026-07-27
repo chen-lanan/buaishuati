@@ -1,0 +1,39 @@
+<view class="container safe-bottom">
+  <view class="row import-actions">
+    <button class="btn-primary flex" bindtap="importFile">导入题库文件</button>
+    <button class="btn-ghost demo" bindtap="installDemo">示例</button>
+  </view>
+
+  <view class="storage-summary" wx:if="{{banks.length}}">本地题库共占用 {{totalSizeText}}</view>
+
+  <view wx:if="{{banks.length}}">
+    <view class="card bank" wx:for="{{banks}}" wx:key="id">
+      <view class="bank-main" data-id="{{item.id}}" bindtap="openBank">
+        <view class="bank-head">
+          <view class="name {{item.nameSizeClass}}">{{item.name}}</view>
+          <view class="source-format-badge source-format-{{item.sourceFormat}}">{{item.sourceFormatLabel}}</view>
+        </view>
+        <view class="subtitle">{{item.questionCount}} 题 · {{item.sizeText}} · 更新于 {{item.updatedText}}</view>
+        <view class="tag-row">
+          <text class="tag">单选 {{item.typeCounts.single || 0}}</text>
+          <text class="tag">多选 {{item.typeCounts.multiple || 0}}</text>
+          <text class="tag">判断 {{item.typeCounts.judge || 0}}</text>
+          <text class="tag">简答 {{item.typeCounts.short || 0}}</text>
+        </view>
+        <view class="tag-row" wx:if="{{item.statusCounts.warning || item.statusCounts.error}}">
+          <text class="tag tag-warn" wx:if="{{item.statusCounts.warning}}">待检查 {{item.statusCounts.warning}}</text>
+          <text class="tag tag-error" wx:if="{{item.statusCounts.error}}">失败 {{item.statusCounts.error}}</text>
+        </view>
+      </view>
+      <view class="bank-actions">
+        <button class="enter-btn" data-id="{{item.id}}" bindtap="openBank">进入题库</button>
+        <button class="delete-btn" data-id="{{item.id}}" catchtap="deleteBank">删除并释放 {{item.sizeText}}</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view>没有本地题库</view>
+    <view class="subtitle">点击上方按钮，可选择 DOC/DOCX、XLS/XLSX、PDF、RTF、ODT/ODS、TXT、CSV 等文件。</view>
+  </view>
+</view>

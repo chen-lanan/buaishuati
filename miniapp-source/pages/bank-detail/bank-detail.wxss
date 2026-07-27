@@ -1,0 +1,23 @@
+.header-card {
+  border-radius: calc(28 * var(--rpx));
+  padding: calc(32 * var(--rpx));
+  text-align: center;
+  overflow: hidden;
+}
+.bank-hero-title { width: 100%; max-width: 100%; min-height: 1.35em; line-height: 1.35; font-weight: 780; text-align: center; white-space: normal; word-break: break-word; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.header-card .subtitle { margin-top: calc(12 * var(--rpx)); text-align: center; line-height: 1.55; word-break: break-word; }
+.question-count { margin-top: calc(22 * var(--rpx)); font-size: calc(82 * var(--rpx)); font-weight: 800; line-height: 1.05; text-align: center; }
+.count-label { margin-top: calc(8 * var(--rpx)); text-align: center; opacity: .78; }
+.type-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: calc(10 * var(--rpx)); margin-top: calc(26 * var(--rpx)); padding-top: calc(20 * var(--rpx)); border-top: 1px solid currentColor; font-size: calc(25 * var(--rpx)); text-align: center; opacity: .9; }
+.mode-card { border-radius: calc(22 * var(--rpx)); padding: calc(28 * var(--rpx)); min-height: calc(146 * var(--rpx)); border: 1px solid var(--theme-card-border, rgba(73,69,79,.12)); }
+.mode-title { font-size: calc(31 * var(--rpx)); font-weight: 720; }
+.mode-desc { font-size: calc(24 * var(--rpx)); margin-top: calc(12 * var(--rpx)); line-height: 1.55; }
+.exam-btn { margin-top: calc(22 * var(--rpx)); width: 100%; }
+.tool-list { padding: calc(10 * var(--rpx)); display: grid; gap: calc(4 * var(--rpx)); }
+.tool-row { min-height: calc(92 * var(--rpx)); padding: 0 calc(18 * var(--rpx)); display: flex; align-items: center; justify-content: space-between; gap: calc(16 * var(--rpx)); border: 0; border-radius: calc(16 * var(--rpx)); }
+.danger-row { color: var(--theme-danger, #ba1a1a); }
+.memorize-card { margin-top: calc(18 * var(--rpx)); display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--theme-warning, #765a00); }
+.memorize-arrow { flex: none; font-size: calc(52 * var(--rpx)); }
+.reimport-warning { margin-top: calc(24 * var(--rpx)); }
+.warning-title { font-size: calc(30 * var(--rpx)); font-weight: 780; }
+.difficulty-row { margin-top: calc(12 * var(--rpx)); padding-top: calc(12 * var(--rpx)); opacity: .76; }

@@ -1,0 +1,26 @@
+不爱刷题 v2.0.3 基线统一解析热修
+
+基线 APK SHA256:
+0b04b7ad0d6a79c3842f0fc69de563394f8c1cd04afe7a30c74811fa496f3a0c
+
+本次修复目标：PDF 与 Word 不再针对同一种异常分别打补丁，而是在共享解析层统一处理紧凑/折叠选项。
+
+已修复：
+1. A. 二氧化碳B. 干粉C. 泡沫 -> A/B/C 三项。
+2. Word 首项 A 自动编号丢失：二氧化碳B. 干粉C. 泡沫 -> 自动恢复 A/B/C。
+3. 参考答案：C 与选项同行时，不再把“参考”残留到最后一个选项。
+4. 解析后的 A 已正确拆分时，校验器不再用原始折叠行把 A 覆盖回整串。
+5. 保留防误拆约束：A/B/C 必须连续，且需要明确选择题上下文/答案佐证。
+
+回归测试通过：
+- parser_regression_test.js
+- v196_common_format_regression_test.js
+- v197_compact_fill_regression_test.js
+- v201_import_robustness_regression_test.js
+- v201_pdf_word_structure_regression_test.js
+- v203_adaptive_import_regression_test.js
+- v204_compact_three_option_parity_regression_test.js
+
+Android Web 资源已用 tools/rebuild_web_assets.py 重新生成。
+
+注意：源码包不含发布签名私钥。没有原固定签名私钥时，无法生成能够直接覆盖安装现有应用的新版 APK。

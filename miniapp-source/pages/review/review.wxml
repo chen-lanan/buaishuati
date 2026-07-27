@@ -1,0 +1,56 @@
+<view class="container safe-bottom">
+  <view class="edit-search-wrap" wx:if="{{editMode}}">
+    <view class="edit-search-box"><text class="search-icon">⌕</text><input class="edit-search-input" value="{{keyword}}" bindinput="onKeywordInput" placeholder="搜索题干、选项、答案、分类或题号" /><text class="clear-search" wx:if="{{keyword}}" bindtap="clearKeyword">×</text></view>
+  </view>
+
+  <view class="card summary"><view class="title">题目检查</view><view class="subtitle">筛选项根据当前题库和所选状态动态显示；“片段重复”指当前题库保存的导入片段相同，不等同于你现在打开的 Word 页面。</view></view>
+
+  <view class="filter-section">
+    <view class="filter-title-row"><view class="filter-title">状态</view><view class="filter-hint">左右拖动</view></view>
+    <view class="filter-scroll" data-preserve-scroll="review-status"><view class="filter-row">
+      <view class="filter-chip {{statusFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="changeStatusFilter"><text>全部</text><text class="chip-count">{{counts.all}}</text></view>
+      <view class="filter-chip {{statusFilter === 'abnormal' ? 'active' : ''}}" data-filter="abnormal" bindtap="changeStatusFilter"><text>全部异常</text><text class="chip-count">{{counts.abnormal}}</text></view>
+      <view class="filter-chip {{statusFilter === 'error' ? 'active error-active' : ''}}" data-filter="error" bindtap="changeStatusFilter"><text>失败</text><text class="chip-count">{{counts.error}}</text></view>
+      <view class="filter-chip {{statusFilter === 'warning' ? 'active' : ''}}" data-filter="warning" bindtap="changeStatusFilter"><text>待检查</text><text class="chip-count">{{counts.warning}}</text></view>
+      <view class="filter-chip {{statusFilter === 'normal' ? 'active' : ''}}" data-filter="normal" bindtap="changeStatusFilter"><text>正常</text><text class="chip-count">{{counts.normal}}</text></view>
+    </view></view>
+  </view>
+
+
+  <view class="filter-section" wx:if="{{showConfidenceFilters && confidenceFilters.length > 1}}">
+    <view class="filter-title-row"><view class="filter-title">置信度</view><view class="filter-hint">异常题默认由低到高</view></view>
+    <view class="filter-scroll" data-preserve-scroll="review-confidence"><view class="filter-row">
+      <view wx:for="{{confidenceFilters}}" wx:key="key" class="filter-chip {{confidenceFilter === item.key ? 'active confidence-active' : ''}}" data-filter="{{item.key}}" bindtap="changeConfidenceFilter"><text>{{item.label}}</text><text class="chip-count">{{item.count}}</text></view>
+    </view></view>
+  </view>
+
+  <view class="filter-section" wx:if="{{showIssueFilters && issueFilters.length > 1}}">
+    <view class="filter-title-row"><view class="filter-title">问题类型</view><view class="filter-hint">只显示当前存在的问题</view></view>
+    <view class="filter-scroll" data-preserve-scroll="review-issue"><view class="filter-row">
+      <view wx:for="{{issueFilters}}" wx:key="key" class="filter-chip {{issueFilter === item.key ? 'active issue-active' : ''}}" data-filter="{{item.key}}" bindtap="changeIssueFilter"><text>{{item.label}}</text><text class="chip-count">{{item.count}}</text></view>
+    </view></view>
+  </view>
+
+  <view class="filter-section" wx:if="{{typeFilters.length > 1}}">
+    <view class="filter-title-row"><view class="filter-title">题型</view><view class="filter-hint">只显示当前存在的题型</view></view>
+    <view class="filter-scroll" data-preserve-scroll="review-type"><view class="filter-row">
+      <view wx:for="{{typeFilters}}" wx:key="key" class="filter-chip {{typeFilter === item.key ? 'active type-active' : ''}}" data-filter="{{item.key}}" bindtap="changeTypeFilter"><text>{{item.label}}</text><text class="chip-count">{{item.count}}</text></view>
+    </view></view>
+  </view>
+
+  <view class="result-summary">当前显示 {{items.length}} / {{total}} 道</view>
+  <view class="card bulk-add-card" wx:if="{{source === 'draft' && counts.abnormal}}"><view class="bulk-add-title">不逐题修改，直接全部保留</view><view class="subtitle">会把全部异常题连同正常题一起保存，异常标记仍然保留，保存后还可以继续校对。</view><button class="btn-primary bulk-add-btn {{savingAll ? 'btn-disabled' : ''}}" bindtap="addAllAbnormalToBank" disabled="{{savingAll}}">全部异常题一键加入题库</button></view>
+
+  <view wx:if="{{items.length}}">
+    <view class="card item" wx:for="{{items}}" wx:key="id" data-index="{{item.originalIndex}}" bindtap="edit">
+      <view class="row-between item-head"><view class="tag-row"><text class="tag tag-error" wx:if="{{item.status === 'error'}}">失败</text><text class="tag tag-warn" wx:elif="{{item.status === 'warning'}}">待检查</text><text class="tag" wx:else>正常</text><text class="tag">{{item.typeLabel}}</text><text class="tag confidence-tag">置信度 {{item.confidencePercent}}%</text><text class="tag" wx:if="{{item.difficulty}}">{{item.difficulty}}</text><text class="tag category-tag" wx:if="{{item.showCategory}}">{{item.category}}</text></view><text class="arrow">›</text></view>
+      <view class="question">{{item.question || '（缺少题干，点击查看原始文件内容）'}}</view>
+      <view class="answer-preview" wx:if="{{item.answerPreview}}">识别答案：{{item.answerPreview}}</view>
+      <view class="repair-note" wx:if="{{item.optionRepairApplied}}">✓ 已按原始选项标签恢复被截断或重复识别的选项</view>
+      <view class="issue" wx:for="{{item.issues}}" wx:key="*this">• {{item}}</view>
+      <view class="raw-box" wx:if="{{item.rawPreview.length}}"><view class="raw-label">{{item.rawSourceLabel}}</view><view class="raw-line" wx:for="{{item.rawPreview}}" wx:key="index">{{item}}</view></view>
+    </view>
+    <button class="btn-ghost load-more" wx:if="{{hasMore}}" bindtap="loadMore">继续加载</button>
+  </view>
+  <view class="empty" wx:else><view class="success-title">当前组合筛选没有题目</view><view class="subtitle">可切换上方状态、置信度、问题类型或题型筛选。</view></view>
+</view>

@@ -1,0 +1,42 @@
+.review-page { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+.review-top { display: flex; align-items: center; gap: calc(12 * var(--rpx)); padding: calc(16 * var(--rpx)) calc(22 * var(--rpx)); border-bottom: calc(2 * var(--rpx)) solid rgba(100,110,130,.12); }
+.filter-scroll { flex: 1; min-width: 0; white-space: nowrap; }
+.filter-row { display: inline-flex; gap: calc(10 * var(--rpx)); }
+.filter-chip, .sheet-btn { flex: none; margin: 0; min-height: calc(56 * var(--rpx)); line-height: calc(56 * var(--rpx)); padding: 0 calc(20 * var(--rpx)); border-radius: calc(999 * var(--rpx)); background: #edf1f7; color: #58677e; font-size: calc(23 * var(--rpx)); }
+.filter-chip.active { background: #dbe4ff; color: #34518d; border: calc(2 * var(--rpx)) solid #6c85c4; }
+.sheet-btn { background: #e6ecfb; color: #405b94; }
+.review-scroll { flex: 1; height: 0; padding: calc(18 * var(--rpx)) calc(22 * var(--rpx)); box-sizing: border-box; }
+.meta-flow { display: flex; flex-wrap: wrap; align-items: center; gap: calc(10 * var(--rpx)); margin-bottom: calc(16 * var(--rpx)); }
+.progress { font-weight: 800; }
+.status { padding: calc(8 * var(--rpx)) calc(14 * var(--rpx)); border-radius: calc(999 * var(--rpx)); font-size: calc(22 * var(--rpx)); }
+.status-correct { background: #e1f4e9; color: #267151; }
+.status-wrong { background: #fde7e4; color: #a23d34; }
+.status-unanswered { background: #eef1f5; color: #687283; }
+.status-short { background: #eee8fb; color: #6b4fa0; }
+.question-card, .answer-card, .analysis-card { padding: calc(24 * var(--rpx)); }
+.question-text { font-size: calc(31 * var(--rpx)); font-weight: 700; line-height: 1.7; white-space: pre-wrap; }
+.question-image, .answer-image { display: block; max-width: 100%; margin: calc(14 * var(--rpx)) auto 0; border-radius: calc(12 * var(--rpx)); }
+.options { display: grid; gap: calc(14 * var(--rpx)); margin: calc(16 * var(--rpx)) 0; }
+.option { display: flex; align-items: flex-start; gap: calc(14 * var(--rpx)); padding: calc(20 * var(--rpx)); border: calc(2 * var(--rpx)) solid rgba(110,120,140,.18); border-radius: calc(18 * var(--rpx)); }
+.option-key { flex: none; width: calc(54 * var(--rpx)); height: calc(54 * var(--rpx)); border-radius: 50%; display: grid; place-items: center; background: #edf0f5; font-weight: 800; }
+.option-body { flex: 1; min-width: 0; }
+.option-text { font-size: calc(28 * var(--rpx)); line-height: 1.6; white-space: pre-wrap; }
+.option-image { display: block; max-width: 100%; margin-top: calc(10 * var(--rpx)); }
+.option.correct { background: #eaf6ef; border-color: #79b494; }
+.option.chosen-correct { background: #dff3e8; border-color: #4c9b70; }
+.option.chosen-wrong { background: #fde9e6; border-color: #d47a70; }
+.answer-title { font-weight: 800; color: #41516a; }
+.answer-line, .answer-text { margin-top: calc(12 * var(--rpx)); line-height: 1.7; white-space: pre-wrap; }
+.bottom-nav { display: grid; grid-template-columns: 1fr 1fr; gap: calc(14 * var(--rpx)); padding: calc(14 * var(--rpx)) calc(22 * var(--rpx)) calc(14 * var(--rpx)); border-top: calc(2 * var(--rpx)) solid rgba(100,110,130,.12); }
+.nav-btn { margin: 0; min-height: calc(82 * var(--rpx)); background: #e9edf5; color: #53627b; }
+.nav-btn.primary { background: #526caa; color: #fff; }
+.sheet-mask { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 20; }
+.sheet-panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 68vh; padding: calc(24 * var(--rpx)); border-radius: calc(26 * var(--rpx)) calc(26 * var(--rpx)) 0 0; background: #fff; }
+.sheet-title { font-size: calc(30 * var(--rpx)); font-weight: 800; }
+.sheet-scroll { max-height: 54vh; margin-top: calc(18 * var(--rpx)); }
+.sheet-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: calc(12 * var(--rpx)); }
+.sheet-item { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: #edf0f4; border: calc(2 * var(--rpx)) solid transparent; }
+.sheet-correct { background: #dff3e8; color: #2c7354; }
+.sheet-wrong { background: #fde7e4; color: #a43c34; }
+.sheet-short { background: #eee8fb; color: #6b4fa0; }
+.sheet-item.current { border-color: #526caa; box-shadow: 0 0 0 calc(3 * var(--rpx)) rgba(82,108,170,.16); }

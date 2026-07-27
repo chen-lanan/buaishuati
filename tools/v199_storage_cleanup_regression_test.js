@@ -1,0 +1,23 @@
+const fs = require('fs');
+const path = require('path');
+const root = path.resolve(__dirname, '..');
+const read = rel => fs.readFileSync(path.join(root, rel), 'utf8');
+const storage = read('miniapp-source/services/bank-storage.js');
+const settings = read('miniapp-source/pages/settings/settings.js');
+const wxml = read('miniapp-source/pages/settings/settings.wxml');
+const gradle = read('app/build.gradle');
+const constants = read('miniapp-source/utils/constants.js');
+function assert(ok, message) { if (!ok) throw new Error(message); }
+assert(/versionCode\s+199/.test(gradle), 'versionCode');
+assert(/versionName\s+'1\.9\.9'/.test(gradle), 'versionName');
+assert(/CURRENT_PARSER_VERSION = '1\.9\.9'/.test(constants), 'parser version');
+assert(/const sourceArchive = ''/.test(storage), 'source archive disabled');
+assert(!/fileUtil\.copyFile\(sourceInput, `\$\{bankDir\}\/\$\{sourceArchive\}`\)/.test(storage), 'source copy still active');
+assert(/map\(compactQuestionForStorage\)/.test(storage), 'question compaction');
+assert(/function cleanupUnusedFiles\(/.test(storage), 'deep cleanup service');
+assert(/referencedImagePaths/.test(storage), 'orphan image cleanup');
+assert(/require\('\.\/record-storage'\)\.clearBankRecords\(bankId\)/.test(storage), 'delete records atomically');
+assert(/bindtap="cleanUnused"/.test(wxml), 'cleanup button');
+assert(/智能清理无用文件/.test(settings), 'cleanup modal');
+assert(/不会删除有效题目/.test(settings), 'safety copy');
+console.log('v1.9.9 storage cleanup regression passed');

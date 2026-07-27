@@ -1,0 +1,65 @@
+<view class="review-page safe-bottom">
+  <view class="review-top">
+    <scroll-view scroll-x class="filter-scroll">
+      <view class="filter-row">
+        <button class="filter-chip {{filter === item.value ? 'active' : ''}}" wx:for="{{filterOptions}}" wx:key="value" data-value="{{item.value}}" bindtap="changeFilter">{{item.label}}</button>
+      </view>
+    </scroll-view>
+    <button class="sheet-btn" wx:if="{{question}}" bindtap="toggleSheet">题卡</button>
+  </view>
+
+  <view class="empty" wx:if="{{!question}}"><view>当前筛选没有题目</view><view class="subtitle">切换到其他筛选查看本次试卷。</view></view>
+
+  <scroll-view scroll-y class="review-scroll" wx:else>
+    <view class="meta-flow">
+      <text class="progress">{{progressText}}</text>
+      <text class="tag">{{typeLabel}}</text>
+      <text class="tag" wx:if="{{difficulty}}">{{difficulty}}</text>
+      <text class="status {{statusClass}}">{{statusLabel}}</text>
+    </view>
+
+    <view class="card question-card">
+      <view class="question-text">{{question.question}}</view>
+      <image class="question-image" wx:for="{{question.images}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+    </view>
+
+    <view class="options" wx:if="{{question.type !== 'short'}}">
+      <view class="option {{item.stateClass}}" wx:for="{{displayOptions}}" wx:key="key">
+        <view class="option-key">{{item.key}}</view>
+        <view class="option-body"><view class="option-text">{{item.text}}</view><image class="option-image" wx:for="{{item.images}}" wx:key="*this" src="{{item}}" mode="widthFix" /></view>
+      </view>
+    </view>
+
+    <view class="card answer-card" wx:if="{{question.type === 'short'}}">
+      <view class="answer-title">我的作答</view>
+      <view class="answer-text">{{shortAnswer || '未作答'}}</view>
+    </view>
+
+    <view class="card answer-card">
+      <view wx:if="{{question.type !== 'short'}}"><text class="answer-title">我的答案：</text><text>{{selectedAnswer}}</text></view>
+      <view class="answer-line"><text class="answer-title">正确答案：</text><text>{{correctAnswer}}</text></view>
+      <image class="answer-image" wx:for="{{question.answerImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+    </view>
+
+    <view class="card analysis-card" wx:if="{{analysis || (question.analysisImages && question.analysisImages.length)}}">
+      <view class="answer-title">解析</view>
+      <view class="answer-text" wx:if="{{analysis}}">{{analysis}}</view>
+      <image class="answer-image" wx:for="{{question.analysisImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+    </view>
+  </scroll-view>
+
+  <view class="bottom-nav" wx:if="{{question}}">
+    <button class="nav-btn" disabled="{{isFirst}}" bindtap="previous">上一题</button>
+    <button class="nav-btn primary" disabled="{{isLast}}" bindtap="next">下一题</button>
+  </view>
+
+  <view class="sheet-mask" wx:if="{{sheetOpen}}" bindtap="toggleSheet"></view>
+  <view class="sheet-panel" wx:if="{{sheetOpen}}">
+    <view class="sheet-title">本次试卷题卡</view>
+    <scroll-view scroll-y class="sheet-scroll">
+      <view class="sheet-grid">
+        <view class="sheet-item {{item.statusClass}} {{item.current ? 'current' : ''}}" wx:for="{{sheetItems}}" wx:key="position" data-position="{{item.position}}" bindtap="jump">{{item.number}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

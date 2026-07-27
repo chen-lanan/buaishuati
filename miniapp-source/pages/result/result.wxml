@@ -1,0 +1,22 @@
+<view class="container safe-bottom" wx:if="{{result}}">
+  <view class="result-card">
+    <view class="result-title">{{result.title}}</view>
+    <view class="score">{{result.accuracy}}</view>
+    <view class="score-label">客观题正确率</view>
+    <view class="result-grid">
+      <view><text class="number">{{result.correct}}</text><text>正确</text></view>
+      <view><text class="number">{{result.answered}}</text><text>已答</text></view>
+      <view><text class="number">{{result.total}}</text><text>总题数</text></view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row-between detail-row"><text>用时</text><text>{{durationText}}</text></view>
+    <view class="row-between detail-row" wx:if="{{result.exam}}"><text>客观题数量</text><text>{{result.objectiveTotal}}</text></view>
+    <view class="row-between detail-row" wx:if="{{result.shortCount}}"><text>简答题</text><text>{{result.shortCount}} 道（不自动计分）</text></view>
+  </view>
+
+  <button class="btn-secondary review-exam-btn" wx:if="{{result.exam}}" bindtap="reviewExam">查看本次试卷</button>
+  <button class="btn-secondary" bindtap="reviewWrong">错题重练</button>
+  <button class="btn-primary home-btn" bindtap="backHome">返回首页</button>
+</view>

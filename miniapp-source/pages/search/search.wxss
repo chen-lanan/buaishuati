@@ -1,0 +1,56 @@
+#page-root[data-page="pages/search/search"] {
+  height: calc(100vh - calc(104 * var(--rpx)) - env(safe-area-inset-top));
+  height: calc(100dvh - calc(104 * var(--rpx)) - env(safe-area-inset-top));
+  min-height: 0;
+  overflow: hidden;
+}
+.search-page { width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.search-head {
+  flex: none;
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  gap: calc(14 * var(--rpx));
+  padding: calc(18 * var(--rpx)) calc(24 * var(--rpx));
+  background: rgba(250,252,255,.96);
+  backdrop-filter: blur(20px);
+  border-bottom: calc(2 * var(--rpx)) solid rgba(108, 133, 177, .12);
+  box-shadow: 0 calc(8 * var(--rpx)) calc(24 * var(--rpx)) rgba(58, 78, 116, .06);
+  align-items: center;
+}
+.search-input {
+  flex: 1;
+  min-width: 0;
+  height: calc(76 * var(--rpx));
+  line-height: calc(76 * var(--rpx));
+  background: #f1f5f8;
+  border: calc(2 * var(--rpx)) solid rgba(104,137,190,.18);
+  outline: none;
+  border-radius: calc(999 * var(--rpx));
+  padding: 0 calc(24 * var(--rpx));
+  font-size: calc(28 * var(--rpx));
+  color: #253451;
+}
+.search-input:focus { border-color: rgba(91,128,203,.5); box-shadow: 0 0 0 calc(6 * var(--rpx)) rgba(111,145,223,.09); }
+.result-count { flex: none; color: #73858d; font-size: calc(24 * var(--rpx)); white-space: nowrap; }
+.result-scroll {
+  flex: 1;
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+.result-scroll::-webkit-scrollbar { width: 0; height: 0; }
+.result-inner { width: 100%; padding: calc(22 * var(--rpx)) calc(24 * var(--rpx)) calc(calc(34 * var(--rpx)) + env(safe-area-inset-bottom)); }
+.result { width: 100%; min-width: 0; overflow: hidden; }
+.result-tags { width: 100%; min-width: 0; display: flex; flex-wrap: wrap; gap: calc(8 * var(--rpx)); }
+.result-tag { margin: 0; max-width: 100%; white-space: normal; word-break: break-all; overflow-wrap: anywhere; }
+.result .question { width: 100%; max-width: 100%; margin-top: calc(16 * var(--rpx)); font-weight: 650; line-height: 1.65; white-space: pre-wrap; word-break: break-all; overflow-wrap: anywhere; }
+.answer-snippet { width: 100%; max-width: 100%; margin-top: calc(14 * var(--rpx)); color: #60747d; font-size: calc(25 * var(--rpx)); line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; word-break: break-all; }
+.load-more { width: 100%; }

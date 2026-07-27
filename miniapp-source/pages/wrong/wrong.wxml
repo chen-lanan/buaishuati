@@ -1,0 +1,21 @@
+<view class="container safe-bottom">
+  <view class="card intro">
+    <view class="title">错题本</view>
+    <view class="subtitle">错题按题目去重累计；在错题重练中答对后移除。</view>
+  </view>
+
+  <view wx:if="{{groups.length}}">
+    <view class="card group" wx:for="{{groups}}" wx:key="id" data-id="{{item.id}}" bindtap="start">
+      <view>
+        <view class="name">{{item.name}}</view>
+        <view class="subtitle">{{item.count}} 道待掌握错题</view>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view>暂时没有错题</view>
+    <view class="subtitle">答错题目后会自动加入这里。</view>
+  </view>
+</view>

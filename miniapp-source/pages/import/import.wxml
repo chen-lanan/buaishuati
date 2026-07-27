@@ -1,0 +1,66 @@
+<view class="container safe-bottom">
+  <view class="card">
+    <view class="title">导入题库文件</view>
+    <view class="subtitle">先选择文件，不会立即解析。确认解析方式后，再点击“开始解析”。</view>
+
+    <view class="upload-box {{fileReady ? 'ready' : ''}}" bindtap="chooseFile">
+      <view class="upload-icon">{{fileReady ? '✓' : '＋'}}</view>
+      <view class="upload-title">{{fileReady ? selectedName : '选择文件'}}</view>
+      <view class="upload-desc" wx:if="{{fileReady}}">{{selectedSize}} · 点击可重新选择</view>
+      <view class="upload-desc" wx:else>.doc/.docx · .xls/.xlsx · PDF · TXT/CSV 等</view>
+    </view>
+
+    <view class="selected-actions" wx:if="{{fileReady && !importing}}">
+      <button class="small-ghost" bindtap="clearFile">清除所选文件</button>
+    </view>
+  </view>
+
+  <view class="card mode-card" wx:if="{{fileReady && aiSupported}}">
+    <view class="section-heading">选择解析方式</view>
+    <view class="subtitle">每次导入默认选择“不使用 AI 模型”。</view>
+
+    <view class="mode-option {{aiIndex === 0 ? 'active' : ''}}" data-index="0" bindtap="selectMode">
+      <view class="mode-radio">{{aiIndex === 0 ? '●' : '○'}}</view>
+      <view class="mode-content">
+        <view class="mode-title">不使用本地 AI 模型（默认）</view>
+        <view class="mode-desc">使用确定性规则解析题号、题型、选项、答案、解析和判断题补全。结构清楚的文档推荐此模式，速度更快、结果更稳定。</view>
+      </view>
+    </view>
+
+    <view class="mode-option {{aiIndex === 1 ? 'active ai' : ''}}" data-index="1" bindtap="selectMode">
+      <view class="mode-radio">{{aiIndex === 1 ? '●' : '○'}}</view>
+      <view class="mode-content">
+        <view class="mode-title">使用本地 AI 模型</view>
+        <view class="mode-desc">先执行与非 AI 模式完全相同的规则解析，再由本地模型只辅助“没有答案标签的简答题段落边界”，最后仍由规则复核。结构清楚的题库通常会得到相同结果。</view>
+      </view>
+    </view>
+
+    <view class="hybrid-note" wx:if="{{aiIndex === 1}}">
+      AI 不修改明确题型、选项或答案，也不能修复图片题和原文缺字。只有无“答案/参考答案”标签、段落归属不明确的简答题，才可能与非 AI 模式出现差异。
+    </view>
+    <view class="model-status {{modelReady ? 'ready' : 'failed'}}" wx:if="{{aiIndex === 1}}">
+      <view class="model-status-title">{{modelReady ? '✓ 本地模型可以正常调用' : '！本地模型未就绪'}}</view>
+      <view class="model-status-desc">{{modelStatus}}</view>
+    </view>
+  </view>
+
+  <view class="card parse-card" wx:if="{{fileReady}}">
+    <button class="btn-primary parse-button {{importing ? 'btn-disabled' : ''}}" bindtap="startParse">
+      {{importing ? stage : parseButtonText}}
+    </button>
+    <view class="progress-wrap" wx:if="{{importing}}">
+      <view class="progress-track"><view class="progress-value" style="width: {{progress}}%;"></view></view>
+      <view class="progress-label">{{progress}}% · {{stage}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">解析说明</view>
+  <view class="card">
+    <view class="tip" wx:for="{{tips}}" wx:key="*this"><text class="dot">•</text><text>{{item}}</text></view>
+  </view>
+
+  <view class="card privacy">
+    <view class="row-between"><text class="privacy-title">本地处理</text><text class="tag">无服务器</text></view>
+    <view class="subtitle">文档、表格、PDF、模型推理、题库解析和异常检查都在当前手机中完成。</view>
+  </view>
+</view>

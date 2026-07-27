@@ -1,0 +1,14 @@
+不爱刷题签名证书说明
+
+历史说明
+- v1.8.7～v2.0.4 正常发布线曾使用 SHA256 8F:CF:55:22:63:B8:E3:75:E9:F4:49:16:8C:FA:B0:B3:23:CB:C6:3E:62:E5:C8:4F:5A:16:11:4F:80:38:EE:FF。
+- v2.0.4“整库识别修复_重装版”因当时没有稳定私钥，使用了临时证书，因此它与此前发布线签名不一致。
+
+v2.0.5 起固定发布证书
+Owner: CN=BuAiQuiz Stable Signing, O=BuAiQuiz, C=CN
+SHA256: 61:78:95:77:EA:FF:09:E9:D5:67:DF:86:11:1F:A7:D9:55:FB:0B:70:86:BF:1B:38:9C:6D:BF:F0:2F:ED:17:CA
+Algorithm: RSA 4096
+
+完整源码包内包含 signing/release.jks 与 signing/signing.properties。
+从 v2.0.5 往后的 APK 必须始终使用这份固定签名，才能直接覆盖安装 v2.0.5 及后续版本。
+请将源码 ZIP 视为敏感文件保存，不要公开签名材料。

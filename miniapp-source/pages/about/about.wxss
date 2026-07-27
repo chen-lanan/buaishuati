@@ -1,0 +1,2 @@
+.section { font-size: calc(31 * var(--rpx)); font-weight: 750; color: #173f4f; }
+.paragraph { margin-top: calc(16 * var(--rpx)); color: #536b75; line-height: 1.85; white-space: pre-wrap; }

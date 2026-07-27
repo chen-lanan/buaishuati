@@ -1,0 +1,257 @@
+#page-root {
+  min-height: 100%;
+  background: #f4f7f8;
+  color: #1f2933;
+  font-size: calc(30 * var(--rpx));
+  box-sizing: border-box;
+}
+
+view, text, button, input, textarea, picker, scroll-view {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+}
+
+button::after {
+  border: none;
+}
+
+.container {
+  padding: calc(28 * var(--rpx));
+}
+
+.card {
+  background: #ffffff;
+  border-radius: calc(22 * var(--rpx));
+  padding: calc(28 * var(--rpx));
+  box-shadow: 0 calc(8 * var(--rpx)) calc(28 * var(--rpx)) rgba(23, 107, 135, 0.08);
+  margin-bottom: calc(24 * var(--rpx));
+}
+
+.title {
+  font-size: calc(38 * var(--rpx));
+  font-weight: 700;
+  color: #123a4a;
+}
+
+.subtitle {
+  margin-top: calc(10 * var(--rpx));
+  font-size: calc(26 * var(--rpx));
+  color: #6b7c85;
+  line-height: 1.7;
+}
+
+.section-title {
+  font-size: calc(32 * var(--rpx));
+  font-weight: 700;
+  margin: calc(30 * var(--rpx)) 0 calc(18 * var(--rpx));
+  color: #173f4f;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-ghost {
+  border-radius: calc(16 * var(--rpx));
+  padding: calc(22 * var(--rpx)) calc(28 * var(--rpx));
+  font-size: calc(30 * var(--rpx));
+  line-height: 1.2;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #176b87;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: #64ccc5;
+  color: #083344;
+}
+
+.btn-danger {
+  background: #fff0f0;
+  color: #bd2c2c;
+}
+
+.btn-ghost {
+  background: #eef5f6;
+  color: #176b87;
+}
+
+.btn-disabled {
+  opacity: 0.45;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(18 * var(--rpx));
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: calc(7 * var(--rpx)) calc(14 * var(--rpx));
+  border-radius: calc(999 * var(--rpx));
+  background: #e8f5f4;
+  color: #176b87;
+  font-size: calc(23 * var(--rpx));
+  margin-right: calc(10 * var(--rpx));
+  margin-top: calc(10 * var(--rpx));
+}
+
+.tag-warn {
+  background: #fff4dc;
+  color: #a15c00;
+}
+
+.tag-error {
+  background: #fff0f0;
+  color: #b42318;
+}
+
+.empty {
+  text-align: center;
+  padding: calc(100 * var(--rpx)) calc(36 * var(--rpx));
+  color: #7b8b93;
+}
+
+.input,
+.textarea,
+.picker-box {
+  width: 100%;
+  background: #f7fafb;
+  border: calc(2 * var(--rpx)) solid #d8e3e7;
+  border-radius: calc(14 * var(--rpx));
+  font-size: calc(29 * var(--rpx));
+  color: #1f2933;
+  box-sizing: border-box;
+}
+
+/* 微信原生 input 的文字区域不参与普通盒模型计算。使用上下 padding 时，
+   部分安卓机、大字体和高分辨率设备会把文字上下裁切，因此输入框统一
+   使用固定高度 + 同高 line-height，只保留左右 padding。 */
+.input {
+  width: 100%;
+  height: calc(92 * var(--rpx));
+  min-height: calc(92 * var(--rpx));
+  line-height: calc(92 * var(--rpx));
+  padding: 0 calc(22 * var(--rpx));
+  overflow: hidden;
+}
+
+.picker-box {
+  width: 100%;
+  min-height: calc(92 * var(--rpx));
+  line-height: 1.45;
+  padding: 0 calc(22 * var(--rpx));
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.textarea {
+  width: 100%;
+  min-height: calc(200 * var(--rpx));
+  line-height: 1.65;
+  padding: calc(22 * var(--rpx));
+  overflow: auto;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.divider {
+  height: calc(2 * var(--rpx));
+  background: #edf1f2;
+  margin: calc(24 * var(--rpx)) 0;
+}
+
+.muted {
+  color: #74858d;
+}
+
+.success {
+  color: #12805c;
+}
+
+.warning {
+  color: #9a5d00;
+}
+
+.error {
+  color: #b42318;
+}
+
+.safe-bottom {
+  padding-bottom: calc(calc(36 * var(--rpx)) + env(safe-area-inset-bottom));
+}
+
+/* v1.3 全局防溢出：安卓大字体、窄屏和长中文均不得撑出页面。 */
+#page-root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+view, button, input, textarea, picker, scroll-view, image {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.row, .row-between {
+  width: 100%;
+  min-width: 0;
+  gap: calc(12 * var(--rpx));
+}
+
+.row > view, .row-between > view,
+.row > text, .row-between > text {
+  min-width: 0;
+}
+
+.grid-2 {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.tag {
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-ghost {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-all;
+}

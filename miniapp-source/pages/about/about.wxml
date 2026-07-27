@@ -1,0 +1,37 @@
+<view class="container safe-bottom">
+  <view class="card">
+    <view class="title">数据处理方式</view>
+    <view class="paragraph">本应用不使用服务器、云函数或云数据库。用户选择的文档、表格、PDF、解析后的题库、错题、收藏和答题记录仅保存在当前设备的应用本地目录中。</view>
+  </view>
+
+  <view class="card">
+    <view class="section">聊天文件权限用途</view>
+    <view class="paragraph">“选择文件”仅用于读取用户主动选择的 DOC/DOCX、XLS/XLSX、PDF、RTF、ODT/ODS、TXT/Markdown/HTML、CSV/TSV 或题库包。应用不会遍历手机中的其他内容，也没有上传文件的网络接口。</view>
+  </view>
+
+  <view class="card">
+    <view class="section">本地方案限制</view>
+    <view class="paragraph">换手机、卸载应用、清理应用数据或系统回收数据后，题库和学习记录可能丢失。建议定期从题库详情页导出 .qbank 文件并妥善备份。</view>
+  </view>
+
+  <view class="card">
+    <view class="section">文档 / 表格识别限制</view>
+    <view class="paragraph">Word 题库支持 DOC、DOCX、DOCM、DOTX、DOTM、RTF 和 ODT。DOC 会读取 Word 97-2003 正文；旧版 DOC 内嵌图片、文本框、复杂公式或加密内容仍可能需要转为 DOCX 后导入。表格题库支持 XLS、XLSX、XLSM、XLTX、XLTM、ODS、CSV 和 TSV，并识别多工作表、表头、题型、难度、选项、答案与解析；合并单元格、跨行排版或非标准表头仍建议导入后校对。</view>
+    <view class="paragraph">标准文字 PDF 会直接读取文字层、页面坐标和内嵌图片，不会先转成 Word。扫描版或部分无文字层页面当前不启用 OCR，会在导入结果中明确统计并提示；多栏、复杂公式和非常规排版仍需校对。</view>
+  </view>
+
+
+  <view class="card">
+    <view class="section">题库删除与空间清理</view>
+    <view class="paragraph">题库管理页可直接“删除并释放空间”，同时删除该题库的题目文件、图片、错题、收藏和进度。解析成功、失败、取消选择或离开导入页后，都会删除系统文件选择缓存和解析工作副本；设置页的“智能清理无用文件”还能清理旧版残留、未引用图片和中断目录，并可单独清理本地导出副本。</view>
+  </view>
+
+  <view class="card">
+    <view class="section">无标签简答题如何分界</view>
+    <view class="paragraph">程序不会只按问号或回车判断，而会综合题型、题号、题干标签、提问词、句子完整度、①②③编号要点、答案句式以及下一题强边界。低可信结果会进入待检查，并显示原始文件片段和判断依据。</view>
+  </view>
+  <view class="card">
+    <view class="section">发布前提示</view>
+    <view class="paragraph">本页面说明当前安卓版本的数据处理方式。应用仅在本机处理题库文件，不会主动上传题库内容。</view>
+  </view>
+</view>

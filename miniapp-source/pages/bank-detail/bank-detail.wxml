@@ -1,0 +1,75 @@
+<view class="container safe-bottom" wx:if="{{manifest}}">
+  <view class="header-card">
+    <view class="title bank-hero-title" style="font-size: calc({{titleFontRpx}} * var(--rpx));">{{manifest.name}}</view>
+    <view class="subtitle">{{manifest.sourceName || '本地题库'}} · {{manifest.sizeText}} · {{manifest.updatedText}}</view>
+    <view class="question-count">{{manifest.questionCount}}</view>
+    <view class="count-label">题目对账记录</view>
+    <view class="subtitle" wx:if="{{manifest.sourceMissingCount}}">正文题目 {{manifest.sourceContentQuestionCount}} · 原文明确定缺失占位 {{manifest.sourceMissingCount}} · 缺失占位不参与正常练习</view>
+    <view class="type-row">
+      <text wx:for="{{manifest.displayTypeSummary}}" wx:key="label">{{item.shortLabel}} {{item.count}}</text>
+    </view>
+    <view class="type-row difficulty-row" wx:if="{{manifest.difficultySummary.length}}">
+      <text wx:for="{{manifest.difficultySummary}}" wx:key="label">{{item.label}} {{item.count}}</text>
+    </view>
+  </view>
+
+  <view class="card import-audit-summary" wx:if="{{manifest.expectedQuestionCount}}">
+    <view class="row-between"><text>官方总数 {{manifest.expectedQuestionCount}}</text><text class="{{manifest.expectedGap === 0 ? 'success' : 'warning'}}">{{manifest.expectedGapText}}</text></view>
+    <view class="subtitle">当前题库共保存 {{manifest.questionCount}} 条对账记录，其中正文题目 {{manifest.sourceContentQuestionCount}} 道；原文明确定缺失占位可在“检查异常题”中查看。
+    <view class="subtitle warning" wx:if="{{manifest.expectedGap > 0}}">官方总数尚差 {{manifest.expectedGap}} 道无法从源文定位；不会自动伪造题目。</view></view>
+  </view>
+
+  <view class="card reimport-warning" wx:if="{{needsReimport}}">
+    <view class="warning-title">这个题库由旧版解析器生成</view>
+    <view class="subtitle">升级代码不会自动改写已经保存的题目。重新导入同名 Word 后选择“覆盖旧题库”，即可彻底替换旧解析数据，无需先手动删除。</view>
+  </view>
+
+  <view class="section-title">开始学习</view>
+  <view class="grid-2">
+    <view class="mode-card" data-mode="sequence" bindtap="practice">
+      <view class="mode-title">顺序练习</view>
+      <view class="mode-desc">按题库顺序作答</view>
+    </view>
+    <view class="mode-card" data-mode="random" bindtap="practice">
+      <view class="mode-title">随机练习</view>
+      <view class="mode-desc">随机抽取题目</view>
+    </view>
+    <view class="mode-card" data-mode="wrong" bindtap="practice">
+      <view class="mode-title">错题重练</view>
+      <view class="mode-desc">{{wrongCount}} 道待掌握</view>
+    </view>
+    <view class="mode-card" data-mode="favorites" bindtap="practice">
+      <view class="mode-title">收藏练习</view>
+      <view class="mode-desc">{{favoriteCount}} 道收藏</view>
+    </view>
+  </view>
+
+  <view class="mode-card memorize-card" data-mode="memorize" bindtap="practice">
+    <view>
+      <view class="mode-title">背题模式</view>
+      <view class="mode-desc">题目、答案和解析同时显示 · {{memorizeSummary}}</view>
+    </view>
+    <view class="memorize-arrow">›</view>
+  </view>
+
+  <button class="btn-secondary exam-btn" bindtap="exam">模拟考试</button>
+
+  <view class="section-title">题库工具</view>
+  <view class="card tool-list">
+    <view class="tool-row" bindtap="search">
+      <text>搜索题目</text><text>›</text>
+    </view>
+    <view class="tool-row" bindtap="editBank">
+      <text>编辑题库</text><text>›</text>
+    </view>
+    <view class="tool-row" bindtap="review">
+      <text>检查异常题</text>
+      <text class="{{manifest.statusCounts.warning || manifest.statusCounts.error ? 'warning' : 'success'}}">
+        {{(manifest.statusCounts.warning || 0) + (manifest.statusCounts.error || 0)}} ›
+      </text>
+    </view>
+    <view class="tool-row" bindtap="rename"><text>重命名题库</text><text>›</text></view>
+    <view class="tool-row" bindtap="exportBank"><text>导出 .qbank 备份</text><text>›</text></view>
+    <view class="tool-row danger-row" bindtap="deleteBank"><text>删除题库</text><text>›</text></view>
+  </view>
+</view>

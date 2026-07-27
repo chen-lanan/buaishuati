@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.shenhai.android'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.shenhai.android'
+        minSdk 22
+        targetSdk 35
+        versionCode 207
+        versionName '2.0.7'
+    }
+
+    def signingProps = new Properties()
+    def signingPropsFile = rootProject.file('signing/signing.properties')
+    if (signingPropsFile.exists()) {
+        signingPropsFile.withInputStream { signingProps.load(it) }
+    }
+    def releaseKeystorePath = System.getenv('BUAIQUIZ_KEYSTORE') ?: signingProps.getProperty('keystore')
+    def releaseStorePassword = System.getenv('BUAIQUIZ_STORE_PASSWORD') ?: signingProps.getProperty('storePassword')
+    def releaseKeyAlias = System.getenv('BUAIQUIZ_KEY_ALIAS') ?: signingProps.getProperty('keyAlias')
+    def releaseKeyPassword = System.getenv('BUAIQUIZ_KEY_PASSWORD') ?: signingProps.getProperty('keyPassword')
+    if (releaseKeystorePath && !new File(releaseKeystorePath).isAbsolute()) {
+        releaseKeystorePath = rootProject.file(releaseKeystorePath).absolutePath
+    }
+
+    signingConfigs {
+        release {
+            if (releaseKeystorePath && releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                storeFile file(releaseKeystorePath)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            if (releaseKeystorePath && releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

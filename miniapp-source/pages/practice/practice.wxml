@@ -1,0 +1,147 @@
+<view class="practice-page" style="--answer-bottom-lift: {{answerBottomLift}}rpx;" wx:if="{{question}}">
+  <view class="topbar">
+    <view class="topbar-scroll-shell">
+      <scroll-view scroll-x class="topbar-scroll" enhanced show-scrollbar="false" data-preserve-scroll="practice-topbar">
+        <view class="topbar-scroll-content">
+          <text class="progress-text">{{progressText}}</text>
+          <text class="tag top-chip type-chip {{typeChipClass}} {{isAbnormal ? 'abnormal-type-tag' : ''}}">{{typeLabel}}</text>
+          <text class="tag top-chip difficulty-tag {{difficultyChipClass}}" wx:if="{{difficulty}}">{{difficulty}}</text>
+          <button class="sheet-open-btn top-chip {{sheetChipClass}}" bindtap="openQuestionSheet">题卡</button>
+          <button class="edit-question-btn top-chip {{editChipClass}}" bindtap="editCurrentQuestion">编辑</button>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="topbar-divider"></view>
+    <view class="question-tools">
+      <button class="master-question-btn" bindtap="masterCurrent">✓ 掌握</button>
+      <view class="favorite" bindtap="toggleFavorite">{{favorite ? '★' : '☆'}}</view>
+    </view>
+  </view>
+  <view class="progress-track"><view class="progress-value" style="transform: scaleX({{progressRatio}});"></view></view>
+
+  <view class="question-viewport">
+    <view class="question-card adaptive-layout {{layoutClass}} {{showAnswer ? 'has-answer' : 'question-only'}} {{question.type === 'short' ? 'short-question' : ''}} {{question.type === 'multiple' ? 'multiple-choice' : 'single-choice'}}" style="font-size: {{30 * fontScale}}rpx;">
+      <scroll-view scroll-y class="question-block" data-preserve-scroll="practice-question" style="{{questionBlockStyle}}">
+        <view class="material-card" wx:if="{{question.material || (question.materialImages && question.materialImages.length)}}">
+          <view class="material-label">材料</view>
+          <view class="material-text">{{question.material}}</view>
+          <image class="material-image" wx:for="{{question.materialImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+        </view>
+        <view class="question-text">{{question.question}}</view>
+        <image class="question-image" wx:for="{{question.images}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+      </scroll-view>
+
+      <scroll-view scroll-y class="options" data-preserve-scroll="practice-options" style="{{optionsStyle}}" wx:if="{{question.type !== 'short'}}">
+        <view
+          wx:for="{{displayOptions}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="selectOption"
+          class="option {{item.stateClass}} {{memorizeMode ? 'memory-option' : ''}} {{item.visualOnly ? 'visual-option' : ''}} {{item.hasImages ? 'image-option' : ''}}">
+          <view class="option-key">{{item.key}}</view>
+          <view class="option-content">
+            <view class="option-text" wx:if="{{item.text && !item.visualOnly}}">{{item.text}}</view>
+            <image class="option-image" wx:for="{{item.images}}" wx:for-item="optionImage" wx:key="*this" src="{{optionImage}}" mode="widthFix" />
+          </view>
+        </view>
+
+        <button class="btn-primary submit-btn" wx:if="{{question.type === 'multiple' && !submitted && !memorizeMode}}" bindtap="submit" disabled="{{selected.length === 0}}">提交答案</button>
+      </scroll-view>
+
+      <view class="short-area" wx:else>
+        <button class="btn-secondary" wx:if="{{!showAnswer}}" bindtap="showShortAnswer">查看参考答案</button>
+      </view>
+
+      <view class="result-zone" wx:if="{{showAnswer}}">
+        <view class="feedback" wx:if="{{submitted && !memorizeMode && question.type !== 'short'}}">
+          <view class="feedback-title {{result.correct ? 'success' : 'error'}}">{{result.correct ? '回答正确' : '回答错误'}}</view>
+          <view class="answer-line">正确答案：{{answerDisplay}}</view>
+        </view>
+
+        <scroll-view scroll-y class="answer-panel {{question.type === 'short' ? 'long-answer' : 'compact-answer'}}" data-preserve-scroll="practice-answer" style="{{answerPanelStyle}}">
+          <view class="answer-title">{{question.type === 'short' ? '参考答案' : '正确答案'}}</view>
+          <view class="answer-text" wx:if="{{answerDetail}}">{{answerDetail}}</view>
+          <image class="answer-image" wx:for="{{question.answerImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+        </scroll-view>
+
+        <scroll-view scroll-y class="analysis" data-preserve-scroll="practice-analysis" style="{{analysisStyle}}" wx:if="{{question.analysis}}">
+          <view class="analysis-title">解析</view>
+          <view class="analysis-text">{{question.analysis}}</view>
+          <image class="analysis-image" wx:for="{{question.analysisImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+        </scroll-view>
+
+        <view class="self-score" wx:if="{{question.type === 'short' && !memorizeMode && !result.selfScore}}">
+          <button class="score-btn mastered" data-score="mastered" bindtap="scoreShort">已掌握</button>
+          <button class="score-btn vague" data-score="vague" bindtap="scoreShort">有印象</button>
+          <button class="score-btn unknown" data-score="unknown" bindtap="scoreShort">不会</button>
+        </view>
+
+        <view class="memory-rating" wx:if="{{memorizeMode}}">
+          <view class="memory-title">这道题记得怎么样？</view>
+          <view class="self-score">
+            <button class="score-btn mastered {{result.selfScore === 'mastered' ? 'rated' : ''}}" data-score="mastered" bindtap="rateMemorize">已掌握</button>
+            <button class="score-btn vague {{result.selfScore === 'vague' ? 'rated' : ''}}" data-score="vague" bindtap="rateMemorize">模糊</button>
+            <button class="score-btn unknown {{result.selfScore === 'unknown' ? 'rated' : ''}}" data-score="unknown" bindtap="rateMemorize">不会</button>
+          </view>
+        </view>
+
+        <view class="auto-next-hint" wx:if="{{autoNextHint}}">{{autoNextHint}}</view>
+        <view class="source" wx:if="{{question.category}}">{{question.level ? question.level + ' · ' : ''}}{{question.category}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-actions">
+    <button class="nav-btn" bindtap="previous" disabled="{{isFirst}}">上一题</button>
+    <button class="nav-btn primary" bindtap="next">{{isLast ? '完成' : '下一题'}}</button>
+  </view>
+
+  <view class="practice-sheet-mask" wx:if="{{showQuestionSheet}}" bindtap="closeQuestionSheet">
+    <view class="practice-sheet-panel" catchtap="noop">
+      <view class="practice-sheet-header">
+        <view>
+          <view class="practice-sheet-title">练习答题卡</view>
+          <view class="practice-sheet-subtitle">点击题号可直接跳转</view>
+        </view>
+        <button class="practice-sheet-close" bindtap="closeQuestionSheet">×</button>
+      </view>
+      <view class="practice-sheet-controls">
+        <view class="practice-sheet-summary">
+          <view class="sheet-summary-item sheet-correct {{sheetStatusFilter === 'correct' ? 'filter-active' : ''}}" data-status="correct" bindtap="filterQuestionSheetStatus">答对 {{sheetCorrectCount}}</view>
+          <view class="sheet-summary-item sheet-wrong {{sheetStatusFilter === 'wrong' ? 'filter-active' : ''}}" data-status="wrong" bindtap="filterQuestionSheetStatus">答错 {{sheetWrongCount}}</view>
+          <view class="sheet-summary-item sheet-unanswered {{sheetStatusFilter === 'unanswered' ? 'filter-active' : ''}}" data-status="unanswered" bindtap="filterQuestionSheetStatus">未答 {{sheetUnansweredCount}}</view>
+        </view>
+        <view class="practice-sheet-type-title">
+          <text>按题型筛选</text>
+          <text class="practice-sheet-filter-count">显示 {{sheetFilteredCount}} / {{sheetTotalCount}}</text>
+        </view>
+        <view class="practice-sheet-type-grid">
+          <view
+            wx:for="{{sheetTypeItems}}"
+            wx:key="key"
+            data-type="{{item.key}}"
+            bindtap="filterQuestionSheetType"
+            class="practice-sheet-type-item {{item.typeClass}} {{sheetTypeFilter === item.key ? 'filter-active' : ''}}">
+            {{item.label}}
+          </view>
+        </view>
+        <view class="practice-sheet-filter-note" wx:if="{{sheetHasFilter}}" bindtap="clearQuestionSheetFilters">已叠加筛选，点此清除</view>
+        <view class="practice-sheet-current-note" wx:if="{{sheetCurrentExcluded}}">当前题不在筛选结果中</view>
+      </view>
+      <view class="practice-sheet-scroll">
+        <view class="practice-sheet-empty" wx:if="{{questionSheetItems.length === 0}}">没有同时符合当前状态和题型的题目</view>
+        <view class="practice-sheet-grid" wx:else>
+          <view
+            wx:for="{{questionSheetItems}}"
+            wx:key="index"
+            data-index="{{item.index}}"
+            bindtap="jumpToQuestion"
+            class="practice-sheet-number {{item.statusClass}} {{item.typeClass}} {{item.current ? 'sheet-current' : ''}} {{item.longNumber ? 'sheet-number-long' : ''}}">
+            <view class="practice-sheet-number-label {{item.current ? 'sheet-current-marker' : ''}}">{{item.number}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="practice-sheet-legend">底色区分答对/答错/未答 · 莫奈色边框区分题型 · 数字框表示当前题</view>
+    </view>
+  </view>
+</view>

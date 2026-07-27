@@ -1,0 +1,6 @@
+.exam-head { background: #eef8f8; }
+.field { margin-bottom: calc(30 * var(--rpx)); }
+.label { font-weight: 700; margin-bottom: calc(14 * var(--rpx)); }
+.switch-row { padding-top: calc(24 * var(--rpx)); border-top: calc(2 * var(--rpx)) solid #edf2f3; align-items: flex-start; }
+.switch-row > view:first-child { flex: 1; padding-right: calc(20 * var(--rpx)); }
+.rule { border-left: calc(8 * var(--rpx)) solid #176b87; }

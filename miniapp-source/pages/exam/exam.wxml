@@ -1,0 +1,83 @@
+<view class="exam-page safe-bottom" style="--answer-bottom-lift: {{answerBottomLift}}rpx;" wx:if="{{question}}">
+  <view class="exam-top">
+    <view class="exam-meta-flow">
+      <text class="progress">{{progressText}}</text>
+      <text class="tag top-chip type-chip {{typeChipClass}} {{isAbnormal ? 'abnormal-type-tag' : ''}}">{{typeLabel}}</text>
+      <text class="tag top-chip difficulty-tag {{difficultyChipClass}}" wx:if="{{difficulty}}">{{difficulty}}</text>
+      <button class="exam-chip-btn sheet-button top-chip {{sheetChipClass}}" bindtap="toggleSheet">题卡</button>
+      <button class="exam-chip-btn edit-question-btn top-chip {{editChipClass}}" bindtap="editCurrentQuestion">编辑</button>
+    </view>
+    <view class="timer">{{remainingText}}</view>
+  </view>
+
+  <scroll-view scroll-y class="exam-scroll" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+    <view class="question-card {{question.type === 'multiple' ? 'multiple-choice' : 'single-choice'}}" style="font-size: {{30 * fontScale}}rpx;">
+      <view class="material-card" wx:if="{{question.material || (question.materialImages && question.materialImages.length)}}">
+        <view class="material-label">材料</view>
+        <view class="material-text">{{question.material}}</view>
+        <image class="material-image" wx:for="{{question.materialImages}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+      </view>
+      <view class="question-text" style="font-size: {{31 * fontScale}}rpx;">{{question.question}}</view>
+      <image class="question-image" wx:for="{{question.images}}" wx:key="*this" src="{{item}}" mode="widthFix" />
+
+      <view wx:if="{{question.type !== 'short'}}" class="options">
+        <view
+          class="option {{item.stateClass}} {{item.hasImages ? 'image-option' : ''}} {{item.visualOnly ? 'visual-option' : ''}}"
+          wx:for="{{displayOptions}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="selectOption">
+          <view class="option-key">{{item.key}}</view>
+          <view class="option-content">
+            <view class="option-text" wx:if="{{item.text && !item.visualOnly}}">{{item.text}}</view>
+            <image class="option-image" wx:for="{{item.images}}" wx:for-item="optionImage" wx:key="*this" src="{{optionImage}}" mode="widthFix" />
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="short-input-area">
+        <view class="subtitle">请在下方输入答题要点。简答题不自动计分。</view>
+        <textarea class="textarea" value="{{shortText}}" bindinput="onShortInput" maxlength="-1" placeholder="输入答题要点" />
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="bottom-actions">
+    <button class="nav-btn" bindtap="previous" disabled="{{session.index === 0}}">上一题</button>
+    <button class="nav-btn primary" bindtap="next">{{session.index === session.questions.length - 1 ? '交卷' : '下一题'}}</button>
+  </view>
+
+  <view class="sheet-mask" wx:if="{{answerSheetOpen}}" bindtap="toggleSheet">
+    <view class="sheet-panel" catchtap="noop">
+      <view class="row-between sheet-head">
+        <view>
+          <view class="title">答题卡</view>
+          <view class="subtitle">作答状态与题型可叠加筛选</view>
+        </view>
+        <view class="close" bindtap="toggleSheet">×</view>
+      </view>
+      <view class="exam-sheet-controls">
+        <view class="exam-sheet-summary">
+          <view class="exam-sheet-summary-item answered {{sheetStatusFilter === 'answered' ? 'filter-active' : ''}}" data-status="answered" bindtap="filterSheetStatus">已答 {{sheetAnsweredCount}}</view>
+          <view class="exam-sheet-summary-item unanswered {{sheetStatusFilter === 'unanswered' ? 'filter-active' : ''}}" data-status="unanswered" bindtap="filterSheetStatus">未答 {{sheetUnansweredCount}}</view>
+        </view>
+        <view class="exam-sheet-type-title">
+          <text>按题型筛选</text>
+          <text class="subtitle">显示 {{sheetFilteredCount}} / {{sheetTotalCount}}</text>
+        </view>
+        <view class="exam-sheet-type-grid">
+          <view wx:for="{{sheetTypeItems}}" wx:key="key" data-type="{{item.key}}" bindtap="filterSheetType" class="exam-sheet-type-item {{item.typeClass}} {{sheetTypeFilter === item.key ? 'filter-active' : ''}}">{{item.label}}</view>
+        </view>
+        <view class="exam-sheet-filter-note" wx:if="{{sheetHasFilter}}" bindtap="clearSheetFilters">已叠加筛选，点此清除</view>
+        <view class="exam-sheet-current-note" wx:if="{{sheetCurrentExcluded}}">当前题不在筛选结果中</view>
+      </view>
+      <view class="exam-sheet-scroll">
+        <view class="sheet-empty" wx:if="{{answerSheet.length === 0}}">没有同时符合当前状态和题型的题目</view>
+        <view class="sheet-grid" wx:else>
+          <view class="sheet-item {{item.answered ? 'answered' : ''}} {{item.typeClass}} {{item.current ? 'current' : ''}} {{item.longNumber ? 'sheet-number-long' : ''}}" wx:for="{{answerSheet}}" wx:key="index" data-index="{{item.index}}" bindtap="jump"><view class="sheet-number-label {{item.current ? 'sheet-current-marker' : ''}}">{{item.number}}</view></view>
+        </view>
+      </view>
+      <button class="btn-primary submit-exam" bindtap="confirmSubmit">交卷</button>
+    </view>
+  </view>
+</view>

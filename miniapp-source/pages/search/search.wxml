@@ -1,0 +1,27 @@
+<view class="search-page">
+  <view class="search-head">
+    <input class="search-input" placeholder="搜索题干、答案、选项、解析" value="{{keyword}}" bindinput="onInput" bindconfirm="onConfirm" confirm-type="search" />
+    <view class="result-count">{{total}} 条</view>
+  </view>
+
+  <scroll-view scroll-y class="result-scroll" data-preserve-scroll="search-results">
+    <view class="result-inner">
+      <view class="card result" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="open">
+        <view class="result-tags">
+          <text class="tag result-tag">{{item.typeLabel}}</text>
+          <text class="tag result-tag" wx:if="{{item.difficulty}}">{{item.difficulty}}</text>
+          <text class="tag result-tag">{{item.category || '未分类'}}</text>
+        </view>
+        <view class="question">{{item.question || '（缺少题干）'}}</view>
+        <view class="answer-snippet">答案：{{item.answerDisplay}}</view>
+      </view>
+
+      <button class="btn-ghost load-more" wx:if="{{hasMore}}" bindtap="loadMore">继续加载</button>
+
+      <view class="empty" wx:if="{{!results.length}}">
+        <view>没有匹配题目</view>
+        <view class="subtitle">搜索范围包含题干、选项、参考答案、解析和原始文件片段。</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

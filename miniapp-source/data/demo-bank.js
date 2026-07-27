@@ -1,0 +1,82 @@
+module.exports = [
+  {
+    id: 'demo_1',
+    order: 1,
+    number: '1',
+    level: '中级工',
+    category: '安全环保知识',
+    chapter: '特殊作业',
+    type: 'judge',
+    question: '动火作业期间监护人员不得离开现场。',
+    options: [{ key: 'A', text: '正确' }, { key: 'B', text: '错误' }],
+    answer: ['A'],
+    answerText: '',
+    analysis: '监护人员应在作业现场全程监护。',
+    images: [],
+    status: 'normal',
+    confidence: 1,
+    issues: []
+  },
+  {
+    id: 'demo_2',
+    order: 2,
+    number: '2',
+    level: '中级工',
+    category: '通用基础知识',
+    chapter: '通信',
+    type: 'multiple',
+    question: '串行数据通信按传输的信息格式可分为哪两种方式？',
+    options: [
+      { key: 'A', text: '异步通信' },
+      { key: 'B', text: '并行通信' },
+      { key: 'C', text: '同步通信' },
+      { key: 'D', text: '单同步行通信' }
+    ],
+    answer: ['A', 'C'],
+    answerText: '',
+    analysis: '按信息格式分为异步通信和同步通信。',
+    images: [],
+    status: 'normal',
+    confidence: 1,
+    issues: []
+  },
+  {
+    id: 'demo_3',
+    order: 3,
+    number: '3',
+    level: '中级工',
+    category: '安全环保知识',
+    chapter: '高处作业',
+    type: 'single',
+    question: '高处作业人员能否坐在平台、孔洞边缘休息？',
+    options: [
+      { key: 'A', text: '可以' },
+      { key: 'B', text: '不可以' }
+    ],
+    answer: ['B'],
+    answerText: '',
+    analysis: '平台和孔洞边缘存在坠落风险，禁止坐卧休息。',
+    images: [],
+    status: 'normal',
+    confidence: 1,
+    issues: []
+  },
+  {
+    id: 'demo_4',
+    order: 4,
+    number: '4',
+    level: '中级工',
+    category: '安全环保知识',
+    chapter: '动火作业',
+    type: 'short',
+    question: '特级动火作业前应落实哪些主要措施？',
+    options: [],
+    answer: [],
+    answerText: '应预先制定作业方案，落实安全防火、防爆及应急措施；在设备或管道上作业时，内部应保持微正压。',
+    analysis: '',
+    images: [],
+    status: 'normal',
+    confidence: 1,
+    issues: []
+  }
+];

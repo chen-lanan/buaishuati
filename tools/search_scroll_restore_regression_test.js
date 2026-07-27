@@ -1,0 +1,14 @@
+'use strict';
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const sourceRoot = process.argv[2];
+if (!sourceRoot) throw new Error('usage: node search_scroll_restore_regression_test.js <source-root>');
+const runtime = fs.readFileSync(path.join(sourceRoot, 'web-runtime/runtime.js'), 'utf8');
+const searchTemplate = fs.readFileSync(path.join(sourceRoot, 'miniapp-source/pages/search/search.wxml'), 'utf8');
+assert.ok(/data-preserve-scroll="search-results"/.test(searchTemplate), '搜索结果滚动区必须有稳定保存键');
+assert.ok(/function captureEntryScrollState\s*\(/.test(runtime), '运行层必须保存页面内部滚动区');
+assert.ok(/function restoreEntryScrollState\s*\(/.test(runtime), '运行层必须恢复页面内部滚动区');
+assert.ok(/captureEntryScrollState\(currentEntry\)/.test(runtime), '离开页面前必须保存搜索滚动位置');
+assert.ok(/restoreEntryScrollState\(currentEntry\)/.test(runtime), '返回页面后必须恢复搜索滚动位置');
+console.log('Search scroll restore regression passed');

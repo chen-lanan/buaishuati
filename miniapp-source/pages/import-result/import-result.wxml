@@ -1,0 +1,132 @@
+<view class="container safe-bottom" wx:if="{{draft}}">
+  <view class="card">
+    <view class="title">智能识别完成</view>
+    <view class="subtitle">{{draft.sourceName}}</view>
+    <view class="parse-mode-tag {{draft.localAIEnabled ? 'ai' : 'rule'}}">{{draft.parseModeText}}</view>
+    <view class="parser-route-tag" wx:if="{{draft.parserRouteText}}">{{draft.parserRouteText}}</view>
+    <view class="count-total">{{draft.questionCount}}</view>
+    <view class="count-label">题目对账记录</view>
+
+    <view class="counts">
+      <view class="count-item normal" data-filter="normal" bindtap="reviewFiltered">
+        <text class="count-number">{{draft.counts.normal || 0}}</text>
+        <text>正常</text>
+      </view>
+      <view class="count-item warn" data-filter="warning" bindtap="reviewFiltered">
+        <text class="count-number">{{draft.counts.warning || 0}}</text>
+        <text>待检查</text>
+      </view>
+      <view class="count-item err" data-filter="error" bindtap="reviewFiltered">
+        <text class="count-number">{{draft.counts.error || 0}}</text>
+        <text>失败</text>
+      </view>
+    </view>
+    <view class="count-tip">点击“正常 / 待检查 / 失败”数字可查看对应题目和{{draft.sourceFragmentLabel}}</view>
+  </view>
+
+
+  <view class="card count-audit-card">
+    <view class="field-label">导入数量核对</view>
+    <view class="audit-grid">
+      <view><text class="audit-number">{{draft.diagnostics.detectedBoundaryCount || draft.diagnostics.sourceContentQuestionCount || draft.questionCount}}</text><text>检测到题目边界</text></view>
+      <view><text class="audit-number">{{draft.diagnostics.sourceContentQuestionCount || draft.questionCount}}</text><text>实际读取到题目</text></view>
+      <view><text class="audit-number error-number">{{draft.diagnostics.sourceDeclaredMissingCount || 0}}</text><text>原文声明但缺正文</text></view>
+      <view><text class="audit-number">{{draft.questionCount}}</text><text>对账记录合计</text></view>
+      <view><text class="audit-number">{{usableCount}}</text><text>正常或待检查</text></view>
+      <view><text class="audit-number error-number">{{draft.counts.error || 0}}</text><text>失败但未丢弃</text></view>
+      <view><text class="audit-number">{{draft.diagnostics.discardedBoundaryCount || 0}}</text><text>边界未生成题目</text></view>
+      <view><text class="audit-number">{{draft.diagnostics.unassignedParagraphCount || 0}}</text><text>未归入题目的段落</text></view>
+      <view><text class="audit-number">{{draft.diagnostics.preservedFailedBoundaryCount || 0}}</text><text>强制保留失败边界</text></view>
+      <view><text class="audit-number">{{draft.diagnostics.numberingGapCount || 0}}</text><text>疑似题号缺口</text></view>
+    </view>
+    <view class="audit-explain">{{draft.auditExplain}}</view>
+    <button class="btn-ghost audit-detail-btn" wx:if="{{draft.diagnostics.unassignedParagraphCount || draft.diagnostics.discardedBoundaryCount || draft.diagnostics.numberingGapCount || draft.diagnostics.sourceDeclaredMissingCount || draft.diagnostics.sourceDeclaredExtraCount}}" bindtap="toggleAuditDetails">{{showAuditDetails ? '收起漏题线索' : '查看漏题线索'}}</button>
+    <view class="audit-details" wx:if="{{showAuditDetails}}">
+      <view class="audit-detail-group" wx:if="{{draft.diagnostics.discardedFragments.length}}">
+        <view class="audit-detail-title">检测到边界但未生成题目</view>
+        <view class="audit-fragment" wx:for="{{draft.diagnostics.discardedFragments}}" wx:key="index">{{index + 1}}. {{item.preview}}</view>
+      </view>
+      <view class="audit-detail-group" wx:if="{{draft.diagnostics.unassignedFragments.length}}">
+        <view class="audit-detail-title">未归入任何题目的源文件片段</view>
+        <view class="audit-fragment" wx:for="{{draft.diagnostics.unassignedFragments}}" wx:key="paragraphIndex">段落 {{item.paragraphIndex}}：{{item.preview}}</view>
+      </view>
+      <view class="audit-detail-group" wx:if="{{draft.diagnostics.numberingIssues.length}}">
+        <view class="audit-detail-title">题号缺口线索</view>
+        <view class="audit-fragment" wx:for="{{draft.diagnostics.numberingIssues}}" wx:key="index">{{item.preview}}</view>
+      </view>
+      <view class="audit-detail-group" wx:if="{{draft.diagnostics.sourceDeclaredMissingItems.length}}">
+        <view class="audit-detail-title">原文声明但缺少正文</view>
+        <view class="audit-fragment" wx:for="{{draft.diagnostics.sourceDeclaredMissingItems}}" wx:key="index">{{item.preview}}</view>
+      </view>
+      <view class="audit-detail-group" wx:if="{{draft.diagnostics.sourceDeclaredExtraItems.length}}">
+        <view class="audit-detail-title">超过章节声明数量的补充题</view>
+        <view class="audit-fragment" wx:for="{{draft.diagnostics.sourceDeclaredExtraItems}}" wx:key="index">{{item.preview}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card expected-card">
+    <view class="field-label">已知官方总数（可选）</view>
+    <input class="input expected-input" type="number" value="{{expectedCount}}" bindinput="onExpectedCountInput" placeholder="例如：520" maxlength="6" />
+    <view class="expected-result {{expectedGap === 0 && expectedCount ? 'matched' : ''}}" wx:if="{{expectedGapText}}">{{expectedGapText}}</view>
+    <view class="subtitle">填写题库发布方给出的总数后，可直接看到本次导入相差多少。正文明确缺失的题号只生成失败占位；仅与官方总数存在差值但无法从源文定位时，只提示差值，不会伪造题干或答案，也不会进入正常练习。</view>
+  </view>
+
+  <view class="card">
+    <view class="field-label">题库名称</view>
+    <input class="input" value="{{name}}" bindinput="onNameInput" maxlength="60" />
+  </view>
+
+  <view class="card replace-notice" wx:if="{{existingBankName}}">
+    <view class="warning-title">检测到同名来源题库</view>
+    <view class="subtitle">保存时可覆盖“{{existingBankName}}”。覆盖会彻底替换旧解析数据，避免继续看到旧版保存的错误题目、选项或重复片段。</view>
+  </view>
+
+  <view class="card diagnostic-card">
+    <view class="field-label">智能识别诊断</view>
+    <view class="diagnostic-grid" wx:if="{{draft.isTableFormat}}">
+      <view><text class="diag-number">{{draft.diagnostics.workbookSheetCount || 0}}</text><text>工作簿 Sheet</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.dataSheetCount || 0}}</text><text>有效题目 Sheet</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.removedNoiseCount || 0}}</text><text>跳过封面/统计 Sheet</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.importedRowCount || 0}}</text><text>读取题目行</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.embeddedImageQuestionCount || 0}}</text><text>含内嵌图片题</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.skippedRowCount || 0}}</text><text>跳过非题目行</text></view>
+    </view>
+    <view class="diagnostic-grid" wx:elif="{{draft.isPdf}}">
+      <view><text class="diag-number">{{draft.diagnostics.pdfPageCount || 0}}</text><text>PDF 总页数</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfTextPageCount || 0}}</text><text>有文字层页面</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfEmptyPageCount || 0}}</text><text>无文字层页面</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfExtractedImageCount || 0}}</text><text>提取内嵌图片</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfUnsupportedImageCount || 0}}</text><text>未支持图片编码</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfFontFallbackRepairCount || 0}}</text><text>字体映射备用修复</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfHeuristicTextRepairCount || 0}}</text><text>已知工程符号修复</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfUnresolvedGlyphCount || 0}}</text><text>仍未解析字符</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.pdfEncodingWarningParagraphCount || 0}}</text><text>字符异常文本片段</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.removedNoiseCount || 0}}</text><text>清理页眉页脚噪声</text></view>
+    </view>
+    <view class="diagnostic-grid" wx:else>
+      <view wx:if="{{draft.isLegacyDoc}}"><text class="diag-number">{{draft.diagnostics.legacyWordPieceCount || 0}}</text><text>DOC 文字片段</text></view>
+      <view wx:if="{{draft.isLegacyDoc}}"><text class="diag-number">{{draft.diagnostics.legacyImagePlaceholderCount || 0}}</text><text>旧式图片占位</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.removedNoiseCount || 0}}</text><text>清理页码/目录噪声</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.splitQuestionStartRepairCount || 0}}</text><text>恢复拆分题号题干</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.noPunctuationBoundaryRepairCount || 0}}</text><text>恢复无标点连续题号</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.inlineAnswerCount || 0}}</text><text>括号或题干内答案</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.inferredBoundaryCount || 0}}</text><text>智能推断题目边界</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.duplicateCount || 0}}</text><text>疑似重复题</text></view>
+      <view><text class="diag-number">{{draft.diagnostics.unlabeledAnswerCount || 0}}</text><text>无答案标签智能识别</text></view>
+      <view wx:if="{{draft.localAIEnabled}}"><text class="diag-number">{{draft.localAIAppliedCount || 0}}</text><text>本地AI实际辅助题目</text></view>
+    </view>
+    <view class="subtitle" wx:if="{{draft.isTableFormat}}">表格会根据工作表和表头识别题干、选项、答案、解析、难度与分类；XLS/XLSX/ODS 保留工作表结构，CSV/TSV 自动识别常见编码和分隔符。无法可靠识别的行会进入跳过或异常线索。</view>
+    <view class="subtitle" wx:elif="{{draft.isPdf}}">PDF 优先读取 ActualText 和 ToUnicode 字体映射，再尝试嵌入字体、Type0/CID 和 Encoding Differences；对可确认结构的 PLC 工程符号执行保守修复。无法可靠恢复的字符仍会标记为“字符映射异常”，不会静默猜测；无文字层页面暂不执行扫描 OCR。</view>
+    <view class="subtitle" wx:else>点击上方正常、待检查或失败数字可查看对应题目。DOC/DOCX/RTF/ODT/TXT/Markdown/HTML 会先恢复正文与常见编码，再使用同一套题号、选项、答案和异常检查规则；无法可靠恢复的内容不会被静默当成正常题。</view>
+  </view>
+
+  <view class="card warning-card" wx:if="{{abnormalCount}}">
+    <view class="warning-title">建议先校对异常题</view>
+    <view class="subtitle">异常题包括缺答案、选项不完整、疑似重复题，以及由程序推断边界的题目。</view>
+    <button class="btn-secondary review-btn" bindtap="review">检查 {{abnormalCount}} 道异常题</button>
+  </view>
+
+  <button class="btn-primary main-btn {{saving ? 'btn-disabled' : ''}}" bindtap="save">保存题库</button>
+  <button class="btn-ghost cancel-btn" bindtap="cancel">放弃本次导入</button>
+</view>

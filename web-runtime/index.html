@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="theme-color" content="#f3f6fb" />
+  <title>不爱刷题</title>
+  <link rel="stylesheet" href="base.css" />
+</head>
+<body>
+  <div id="app-shell">
+    <header id="app-bar">
+      <div id="app-bar-left">
+        <button id="back-button" aria-label="返回">‹</button>
+        <button id="global-statistics-button" class="global-action-button home-statistics-button hidden" aria-label="学习统计" title="学习统计">
+          <span class="global-bars-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+      </div>
+      <div id="app-title">不爱刷题</div>
+      <nav id="app-bar-actions" aria-label="全局工具">
+        <button id="global-settings-button" class="global-action-button global-settings-icon" aria-label="设置" title="设置">⚙</button>
+      </nav>
+    </header>
+    <main id="page-root"></main>
+  </div>
+  <div id="toast-layer" aria-live="polite"></div>
+  <div id="loading-layer" class="hidden"><div class="loading-card"><div class="spinner"></div><div id="loading-text">处理中</div></div></div>
+  <div id="modal-layer" class="hidden"></div>
+  <style id="app-style"></style>
+  <style id="page-style"></style>
+  <link rel="stylesheet" href="theme.css" />
+  <script src="runtime.js"></script>
+  <script src="project-data.js"></script>
+  <script src="project-modules.js"></script>
+  <script>window.__bootMiniApp();</script>
+</body>
+</html>

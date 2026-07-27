@@ -1,0 +1,45 @@
+<view class="container safe-bottom" wx:if="{{!bankId}}">
+  <view class="card intro">
+    <view class="title">已掌握</view>
+    <view class="subtitle">按题库独立管理，移出后重新进入练习和背题，且不会清除原练习进度。</view>
+  </view>
+  <view wx:if="{{groups.length}}">
+    <view class="card group" wx:for="{{groups}}" wx:key="id" data-id="{{item.id}}" bindtap="openBank">
+      <view><view class="name">{{item.name}}</view><view class="subtitle">{{item.count}} 道已掌握题目</view></view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+  <view class="empty" wx:else><view>还没有已掌握题目</view><view class="subtitle">在练习页点击“✓ 掌握”，或在背题评价中选择“已掌握”。</view></view>
+</view>
+
+<view class="mastered-page safe-bottom" wx:else>
+  <view class="mastered-sticky">
+    <view class="mastered-search-row">
+      <input class="input mastered-search" placeholder="搜索题干、题型或分类" value="{{query}}" bindinput="onSearch" />
+      <view class="mastered-count">{{items.length}} / {{total}}</view>
+    </view>
+    <view class="filter-row">
+      <picker class="filter-picker" mode="selector" range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange"><view class="filter-chip">{{typeOptions[typeIndex].label}}⌄</view></picker>
+      <picker class="filter-picker" mode="selector" range="{{categoryOptions}}" range-key="label" value="{{categoryIndex}}" bindchange="onCategoryChange"><view class="filter-chip">{{categoryOptions[categoryIndex].label}}⌄</view></picker>
+      <picker class="filter-picker" mode="selector" range="{{orderOptions}}" value="{{orderIndex}}" bindchange="onOrderChange"><view class="filter-chip">{{orderOptions[orderIndex]}}⌄</view></picker>
+    </view>
+    <view class="batch-row">
+      <button class="batch-btn" bindtap="toggleSelectionMode">{{selectionMode ? '退出批量' : '批量管理'}}</button>
+      <button class="batch-btn" wx:if="{{selectionMode}}" bindtap="selectAllVisible">全选当前</button>
+      <button class="batch-btn danger" wx:if="{{selectionMode}}" bindtap="removeSelected">移出 {{selectedCount}}</button>
+    </view>
+  </view>
+
+  <view class="mastered-list" wx:if="{{items.length}}">
+    <view class="card mastered-item {{item.selected ? 'selected-item' : ''}}" wx:for="{{items}}" wx:key="rowKey" data-id="{{item.questionId}}" bindtap="toggleSelect">
+      <view class="item-head">
+        <view class="mastered-tags"><text class="tag">{{item.typeLabel}}</text><text class="tag">{{item.category}}</text></view>
+        <view class="select-dot {{item.selected ? 'checked' : ''}}" wx:if="{{selectionMode}}">{{item.selected ? '✓' : ''}}</view>
+      </view>
+      <view class="mastered-question">{{item.question}}</view>
+      <view class="mastered-order">原题库第 {{item.sourceOrder}} 题</view>
+      <button class="restore-btn" wx:if="{{!selectionMode}}" data-id="{{item.questionId}}" catchtap="remove">移出已掌握，恢复练习</button>
+    </view>
+  </view>
+  <view class="empty" wx:else><view>当前筛选没有题目</view><view class="subtitle">可切换题型、分类或搜索条件。</view></view>
+</view>

@@ -1,0 +1,129 @@
+<view class="container safe-bottom" wx:if="{{question}}">
+  <view class="card">
+    <view class="row-between type-heading">
+      <view class="field-label no-bottom">题型</view>
+      <button class="mini-btn type-manage-btn" bindtap="openTypeManager">管理题型</button>
+    </view>
+    <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange">
+      <view class="picker-box">{{typeOptions[typeIndex].label}} ›</view>
+    </picker>
+    <view class="subtitle">异常题仍保留原始题型用于编辑和检查；练习、背题时异常状态优先，不会混入普通题型。</view>
+
+    <view class="field-label gap">分类</view>
+    <input class="input" value="{{question.category}}" bindinput="onCategoryInput" />
+
+    <view class="field-label gap">难度</view>
+    <input class="input" value="{{question.difficulty}}" bindinput="onDifficultyInput" placeholder="未填写时答题页不显示" />
+
+    <view class="field-label gap">材料 / 公共题干</view>
+    <textarea class="textarea editor-textarea material-input" value="{{question.material}}" bindinput="onMaterialInput" maxlength="-1" disable-default-padding="{{true}}" placeholder="材料题可填写共享材料；普通题留空" />
+    <view class="editor-image-row" wx:if="{{question.materialImages && question.materialImages.length}}">
+      <view class="image-edit-card" wx:for="{{question.materialImages}}" wx:for-item="imagePath" wx:key="*this">
+        <image class="editor-question-image" src="{{imagePath}}" mode="widthFix" />
+        <view class="image-action-row"><button class="image-action move" data-index="{{index}}" bindtap="moveMaterialImageToQuestion">移到题干</button><button class="image-action delete" data-index="{{index}}" bindtap="removeMaterialImage">删除</button></view>
+      </view>
+    </view>
+
+    <view class="field-label gap">题干</view>
+    <textarea class="textarea editor-textarea question-input" value="{{question.question}}" bindinput="onQuestionInput" maxlength="-1" disable-default-padding="{{true}}" />
+    <view class="subtitle" wx:if="{{question.images && question.images.length}}">图片只有题干/答案归属不明确时，可在这里手动移动。</view>
+    <view class="editor-image-row question-image-row" wx:if="{{question.images && question.images.length}}">
+      <view class="image-edit-card" wx:for="{{question.images}}" wx:for-item="imagePath" wx:key="*this">
+        <image class="editor-question-image" src="{{imagePath}}" mode="widthFix" />
+        <view class="image-action-row">
+          <button class="image-action move" data-index="{{index}}" bindtap="moveQuestionImageToAnswer">移到参考答案</button>
+          <button class="image-action delete" data-index="{{index}}" bindtap="removeQuestionImage">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{question.type !== 'short'}}">
+    <view class="row-between">
+      <view class="field-label">选项与正确答案</view>
+      <button class="mini-btn" bindtap="addOption" wx:if="{{question.options.length < 8}}">＋选项</button>
+    </view>
+    <view class="option-edit" wx:for="{{question.options}}" wx:key="key">
+      <view class="answer-key {{item.selected ? 'selected' : ''}}" data-key="{{item.key}}" bindtap="toggleAnswer">{{item.key}}</view>
+      <view class="option-edit-body">
+        <textarea class="textarea editor-textarea option-input" value="{{item.text}}" data-index="{{index}}" bindinput="onOptionInput" maxlength="-1" disable-default-padding="{{true}}" placeholder="选项文字（仅图片选项可留空）" />
+        <view class="editor-image-row option-image-row" wx:if="{{item.images && item.images.length}}"><image class="editor-image" wx:for="{{item.images}}" wx:for-item="imagePath" wx:key="*this" src="{{imagePath}}" mode="widthFix" /></view>
+      </view>
+      <view class="remove" data-index="{{index}}" bindtap="removeOption">×</view>
+    </view>
+    <view class="subtitle">点击左侧字母设置正确答案。多选题可选择多个。</view>
+  </view>
+
+  <view class="card" wx:if="{{question.type === 'short'}}">
+    <view class="field-label">参考答案</view>
+    <textarea class="textarea editor-textarea answer-input" value="{{question.answerText}}" bindinput="onAnswerTextInput" maxlength="-1" disable-default-padding="{{true}}" placeholder="文字答案可留空；图片答案可在下方保留" />
+    <view class="editor-image-row" wx:if="{{question.answerImages && question.answerImages.length}}">
+      <view class="image-edit-card answer-image-card" wx:for="{{question.answerImages}}" wx:for-item="imagePath" wx:key="*this">
+        <image class="editor-answer-image" src="{{imagePath}}" mode="widthFix" />
+        <view class="image-action-row">
+          <button class="image-action move" data-index="{{index}}" bindtap="moveAnswerImageToQuestion">移到题干</button>
+          <button class="image-action delete" data-index="{{index}}" bindtap="removeAnswerImage">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="field-label">解析</view>
+    <textarea class="textarea editor-textarea analysis-input" value="{{question.analysis}}" bindinput="onAnalysisInput" maxlength="-1" disable-default-padding="{{true}}" />
+    <view class="editor-image-row" wx:if="{{question.analysisImages && question.analysisImages.length}}"><image class="editor-answer-image" wx:for="{{question.analysisImages}}" wx:for-item="imagePath" wx:key="*this" src="{{imagePath}}" mode="widthFix" /></view>
+  </view>
+
+  <view class="card source-card">
+    <view class="field-label">识别依据</view>
+    <view class="source-line">题目边界：{{question.boundarySource || '未知'}}</view>
+    <view class="source-line">答案来源：{{question.answerSource || '未识别'}}</view>
+    <view class="source-line" wx:if="{{question.answerBoundarySource}}">题干/答案分界：{{question.answerBoundarySource}}</view>
+    <view class="source-line ai-source" wx:if="{{question.aiAssistApplied}}">本地AI辅助：{{question.aiModelVersion}}</view>
+    <view class="raw-title" wx:if="{{question.source.rawTexts.length}}">{{rawSourceLabel}}</view>
+    <view class="raw-text" wx:for="{{question.source.rawTexts}}" wx:key="index">{{item}}</view>
+  </view>
+
+  <view class="card issue-card" wx:if="{{question.issues.length}}">
+    <view class="field-label">当前问题</view>
+    <view class="issue" wx:for="{{question.issues}}" wx:key="*this">• {{item}}</view>
+  </view>
+
+  <view class="editor-actions">
+    <button class="btn-secondary undo-btn" wx:if="{{source === 'bank' && canUndo}}" bindtap="undoLastEdit">撤销本题上次保存</button>
+    <button class="btn-primary save-btn" disabled="{{saving}}" bindtap="save">{{saving ? '正在保存…' : '保存并重新检查'}}</button>
+  </view>
+</view>
+
+<view class="type-manager-mask" wx:if="{{typeManagerVisible}}" bindtap="closeTypeManager">
+  <view class="type-manager-card" catchtap="stopTap">
+    <view class="row-between">
+      <view class="type-manager-title">管理题型</view>
+      <view class="type-manager-close" bindtap="closeTypeManager">×</view>
+    </view>
+    <view class="subtitle">内置题型不能删除。自定义题型仍被题目使用时，需要先修改对应题目后再删除。</view>
+
+    <view class="custom-type-list" wx:if="{{customTypes.length}}">
+      <view class="custom-type-row" wx:for="{{customTypes}}" wx:key="label">
+        <view class="custom-type-info">
+          <view class="custom-type-name">{{item.label}}</view>
+          <view class="custom-type-meta">{{item.coreType === 'single' ? '单选结构' : item.coreType === 'multiple' ? '多选结构' : item.coreType === 'judge' ? '判断结构' : '主观题结构'}} · {{item.usageCount}} 道题使用</view>
+        </view>
+        <view class="custom-type-actions">
+          <button class="custom-edit" data-label="{{item.label}}" bindtap="editCustomType">编辑</button>
+          <button class="custom-delete" disabled="{{item.usageCount > 0}}" data-label="{{item.label}}" bindtap="deleteCustomType">删除</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty-custom" wx:else>暂无自定义题型</view>
+
+    <view class="divider"></view>
+    <view class="row-between type-form-heading"><view class="field-label no-bottom">{{editingTypeLabel ? '编辑题型' : '创建新题型'}}</view><button class="custom-cancel-edit" wx:if="{{editingTypeLabel}}" bindtap="cancelCustomTypeEdit">取消编辑</button></view>
+    <input class="input" value="{{newTypeName}}" bindinput="onNewTypeNameInput" placeholder="例如：论述题、案例分析题" />
+    <view class="field-label gap-small">答题结构</view>
+    <picker mode="selector" range="{{coreTypeOptions}}" range-key="label" value="{{newCoreTypeIndex}}" bindchange="onNewCoreTypeChange">
+      <view class="picker-box">{{coreTypeOptions[newCoreTypeIndex].label}} ›</view>
+    </picker>
+    <button class="btn-primary create-type-btn" bindtap="saveCustomType">{{editingTypeLabel ? '保存题型修改' : '创建并用于当前题'}}</button>
+  </view>
+</view>

@@ -1,0 +1,46 @@
+<view class="container safe-bottom">
+  <view class="grid-2 stats-grid">
+    <view class="stat-card"><text class="num">{{summary.answered || 0}}</text><text>累计答题</text></view>
+    <view class="stat-card"><text class="num">{{summary.accuracy || 0}}%</text><text>累计正确率</text></view>
+    <view class="stat-card"><text class="num">{{summary.studyDays || 0}}</text><text>学习天数</text></view>
+    <view class="stat-card"><text class="num">{{summary.reviewed || 0}}</text><text>背题复习</text></view>
+    <view class="stat-card"><text class="num">{{summary.exams || 0}}</text><text>模拟考试</text></view>
+    <view class="stat-card"><text class="num">{{summary.wrongCount || 0}}</text><text>待掌握错题</text></view>
+    <view class="stat-card"><text class="num">{{summary.favoriteCount || 0}}</text><text>收藏题目</text></view>
+    <view class="stat-card"><text class="num">{{summary.masteredCount || 0}}</text><text>已掌握</text></view>
+  </view>
+
+  <view class="section-title">最近学习</view>
+  <view class="card">
+    <view class="day-row" wx:for="{{recentDays}}" wx:key="day">
+      <text>{{item.day}}</text><text>{{item.count}} 题</text>
+    </view>
+    <view class="empty-small" wx:if="{{!recentDays.length}}">还没有答题记录</view>
+  </view>
+
+  <view class="section-title">本地题库</view>
+  <view class="card">
+    <view class="day-row"><text>题库数量</text><text>{{summary.bankCount || 0}}</text></view>
+    <view class="day-row"><text>题目总数</text><text>{{summary.questionCount || 0}}</text></view>
+  </view>
+
+  <view class="section-title" wx:if="{{byBank.length}}">题库正确率</view>
+<view class="card" wx:if="{{byBank.length}}">
+  <view class="day-row metric-row" wx:for="{{byBank}}" wx:key="key"><text class="metric-label">{{item.label}}</text><text>{{item.answered}} 题 · {{item.accuracy}}%</text></view>
+</view>
+
+<view class="section-title" wx:if="{{byType.length}}">题型正确率</view>
+<view class="card" wx:if="{{byType.length}}">
+  <view class="day-row" wx:for="{{byType}}" wx:key="key"><text>{{item.label}}</text><text>{{item.answered}} 题 · {{item.accuracy}}%</text></view>
+</view>
+
+<view class="section-title" wx:if="{{byDifficulty.length}}">难度正确率</view>
+<view class="card" wx:if="{{byDifficulty.length}}">
+  <view class="day-row" wx:for="{{byDifficulty}}" wx:key="key"><text>{{item.label}}</text><text>{{item.answered}} 题 · {{item.accuracy}}%</text></view>
+</view>
+
+<view class="section-title" wx:if="{{weakCategories.length}}">薄弱分类</view>
+<view class="card" wx:if="{{weakCategories.length}}">
+  <view class="day-row metric-row" wx:for="{{weakCategories}}" wx:key="key"><text class="metric-label">{{item.label}}</text><text>{{item.answered}} 题 · {{item.accuracy}}%</text></view>
+</view>
+</view>

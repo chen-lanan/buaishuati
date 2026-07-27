@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/banks/banks",
+    "pages/import/import",
+    "pages/import-result/import-result",
+    "pages/review/review",
+    "pages/editor/editor",
+    "pages/bank-detail/bank-detail",
+    "pages/practice-config/practice-config",
+    "pages/practice/practice",
+    "pages/exam-config/exam-config",
+    "pages/exam/exam",
+    "pages/result/result",
+    "pages/exam-review/exam-review",
+    "pages/wrong/wrong",
+    "pages/favorites/favorites",
+    "pages/search/search",
+    "pages/statistics/statistics",
+    "pages/mastered/mastered",
+    "pages/settings/settings",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarTitleText": "不爱刷题",
+    "navigationBarBackgroundColor": "#176B87",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F4F7F8",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

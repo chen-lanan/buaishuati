@@ -1,0 +1,16 @@
+<view class="container safe-bottom">
+  <view wx:if="{{groups.length}}">
+    <view class="card group" wx:for="{{groups}}" wx:key="id" data-id="{{item.id}}" bindtap="start">
+      <view>
+        <view class="name">{{item.name}}</view>
+        <view class="subtitle">{{item.count}} 道收藏题目</view>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view>还没有收藏题目</view>
+    <view class="subtitle">刷题时点击右上角星标即可收藏。</view>
+  </view>
+</view>

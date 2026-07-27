@@ -1,0 +1,135 @@
+<view class="container safe-bottom">
+  <view class="card appearance-card">
+    <view class="setting-row column theme-setting-block">
+      <view class="setting-title">外观模式</view>
+      <view class="subtitle">选择浅色、深色或跟随系统。</view>
+      <view class="appearance-options">
+        <view class="appearance-option {{settings.appearanceMode === item.value ? 'active' : ''}}" wx:for="{{appearanceOptions}}" wx:key="value" data-value="{{item.value}}" bindtap="onAppearancePick">
+          <text class="appearance-icon">{{item.icon}}</text>
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+      <view class="amoled-subsetting">
+        <view class="amoled-copy">
+          <view class="setting-title">AMOLED 纯黑</view>
+          <view class="subtitle">仅在深色模式下生效。</view>
+        </view>
+        <switch checked="{{settings.amoledBlack}}" color="#176B87" bindchange="onAmoledChange" />
+      </view>
+    </view>
+    <view class="setting-row column theme-setting-block">
+      <view class="setting-title">莫奈主题色</view>
+      <view class="subtitle">选择全局主题色。</view>
+      <view class="monet-options">
+        <view class="monet-option {{settings.monetTheme === item.value ? 'active' : ''}}" wx:for="{{themeOptions}}" wx:key="value" data-value="{{item.value}}" bindtap="onThemePick">
+          <view class="monet-swatch monet-{{item.value}}"></view>
+          <text>{{item.label}}</text>
+          <text class="monet-check" wx:if="{{settings.monetTheme === item.value}}">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="setting-row column">
+      <view class="row-between">
+        <view>
+          <view class="setting-title">题目字体大小</view>
+          <view class="subtitle">当前 {{settings.fontScale}} 倍</view>
+        </view>
+      </view>
+      <slider min="0.8" max="1.4" step="0.1" value="{{settings.fontScale}}" activeColor="#176B87" bindchange="onFontChange" show-value />
+    </view>
+
+    <view class="setting-row column answer-position-setting">
+      <view class="setting-title">答题界面底部位置</view>
+      <view class="subtitle">向左降低，向右抬高；“上一题 / 下一题”和答题大边框底边会同步移动，两者间距保持不变。当前约上移 {{settings.answerBottomLift / 2}} 像素。</view>
+      <slider min="0" max="120" step="8" value="{{settings.answerBottomLift}}" activeColor="#176B87" bindchange="onAnswerBottomLiftChange" show-value />
+      <view class="answer-position-scale"><text>更低</text><text>更高</text></view>
+    </view>
+
+    <view class="setting-row">
+      <view>
+        <view class="setting-title">沉浸状态栏</view>
+        <view class="subtitle">状态栏颜色跟随当前主题。</view>
+      </view>
+      <switch checked="{{settings.immersivePractice}}" color="#176B87" bindchange="onImmersiveChange" />
+    </view>
+
+    <view class="setting-row">
+      <view>
+        <view class="setting-title">答对后自动下一题</view>
+        <view class="subtitle">答案和解析会先显示；仅答对时延时跳转，答错不会跳。</view>
+      </view>
+      <switch checked="{{settings.autoNext}}" color="#176B87" bindchange="onAutoNext" />
+    </view>
+
+    <view class="setting-row" wx:if="{{settings.autoNext}}">
+      <view>
+        <view class="setting-title">自动跳题延时</view>
+        <view class="subtitle">留出时间查看正确答案和解析。</view>
+      </view>
+      <picker range="{{delayLabels}}" value="{{delayIndex}}" bindchange="onDelayChange">
+        <view class="delay-picker">{{delayLabels[delayIndex]}} ›</view>
+      </picker>
+    </view>
+
+    <view class="setting-row">
+      <view>
+        <view class="setting-title">选项顺序</view>
+        <view class="subtitle">返回练习页后，未作答题立即按新设置更新；已作答题不重排。含“以上都是”等题保持固定，背题模式始终使用原顺序。</view>
+      </view>
+      <picker range="{{optionOrderLabels}}" value="{{optionOrderIndex}}" bindchange="onOptionOrderChange">
+        <view class="option-order-picker">{{optionOrderLabels[optionOrderIndex]}} ›</view>
+      </picker>
+    </view>
+
+    <view class="setting-row">
+      <view>
+        <view class="setting-title">重新开始时重置错题</view>
+        <view class="subtitle">开启后，顺序练习关闭“继续上次进度”并从头开始时，清除当前题库错题；关闭后错题持续累计，只在错题重练中答对才移除。</view>
+      </view>
+      <switch checked="{{settings.resetWrongOnRestart}}" color="#176B87" bindchange="onResetWrongChange" />
+    </view>
+  </view>
+
+  <view class="card tips-card">
+    <view class="setting-title">背题模式说明</view>
+    <view class="subtitle">背题模式始终直接显示答案和解析，支持顺序背题与随机背题；顺序背题可继续上次浏览位置，随机背题不会覆盖顺序进度。点击“已掌握”会移入已掌握列表，可在首页恢复。</view>
+  </view>
+
+  <view class="card storage-card">
+    <view class="row-between">
+      <view class="setting-title">本地存储管理</view>
+      <text class="storage-total">共 {{storage.totalText}}</text>
+    </view>
+    <view class="storage-row"><text>已保存题库</text><text>{{storage.bankText}}</text></view>
+    <view class="storage-row"><text>学习记录</text><text>{{storage.recordText}}</text></view>
+    <view class="storage-row"><text>导入临时文件（含文件选择缓存）</text><text>{{storage.importText}}</text></view>
+    <view class="storage-row storage-subrow" wx:if="{{storage.pickedCacheText !== '0 B'}}"><text>其中：系统文件选择缓存</text><text>{{storage.pickedCacheText}}</text></view>
+    <view class="storage-row reclaimable-row"><text>可清理无用文件</text><text>{{storage.unusedText}}</text></view>
+    <view class="storage-row"><text>导出题库副本</text><text>{{storage.exportText}}</text></view>
+    <view class="storage-row"><text>完整备份文件</text><text>{{storage.backupText}}</text></view>
+    <view class="storage-actions">
+      <button class="storage-btn" bindtap="goBanks">删除题库</button>
+      <button class="storage-btn" bindtap="cleanUnused">智能清理无用文件</button>
+      <button class="storage-btn danger-btn" bindtap="cleanExports">清理导出副本</button>
+      <button class="storage-btn danger-btn" bindtap="cleanBackups">清理完整备份</button>
+    </view>
+  </view>
+
+  <view class="card storage-card">
+    <view class="setting-title">完整备份与恢复</view>
+    <view class="subtitle">备份包含全部题库、图片、错题、收藏、已掌握、练习进度、设置和学习统计。恢复时会整体替换当前数据。</view>
+    <view class="storage-actions backup-actions">
+      <button class="storage-btn" bindtap="createBackup">生成完整备份</button>
+      <button class="storage-btn danger-btn" bindtap="restoreBackup">从备份恢复</button>
+    </view>
+  </view>
+
+  <view class="card menu">
+    <view class="menu-row" bindtap="goAbout"><text>本地数据与隐私说明</text><text>›</text></view>
+    <view class="menu-row danger" bindtap="clearRecords"><text>清除学习记录</text><text>›</text></view>
+  </view>
+
+</view>

@@ -1,0 +1,23 @@
+.import-actions { gap: calc(16 * var(--rpx)); margin-bottom: calc(18 * var(--rpx)); }
+.flex { flex: 1; min-width: 0; }
+.demo { flex: none; width: calc(150 * var(--rpx)); }
+.storage-summary { margin: 0 calc(4 * var(--rpx)) calc(20 * var(--rpx)); color: #71838b; font-size: calc(24 * var(--rpx)); }
+.bank { padding: 0; overflow: hidden; }
+.bank-main { width: 100%; min-width: 0; padding: calc(26 * var(--rpx)) calc(28 * var(--rpx)) calc(22 * var(--rpx)); }
+.bank-head { display: flex; align-items: center; gap: calc(14 * var(--rpx)); min-width: 0; }
+.bank .name { flex: 1; min-width: 0; font-weight: 700; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bank .bank-name-normal { font-size: calc(33 * var(--rpx)); }
+.bank .bank-name-medium { font-size: calc(29 * var(--rpx)); }
+.bank .bank-name-compact { font-size: calc(25 * var(--rpx)); }
+.source-format-badge { flex: none; min-width: calc(78 * var(--rpx)); height: calc(50 * var(--rpx)); padding: 0 calc(10 * var(--rpx)); border-radius: calc(11 * var(--rpx)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: calc(19 * var(--rpx)); font-weight: 800; letter-spacing: calc(.5 * var(--rpx)); box-sizing: border-box; }
+.source-format-word { background: #2563eb; }
+.source-format-pdf { background: #dc2626; }
+.source-format-excel { background: #16a34a; }
+.source-format-text { background: #0f766e; }
+.source-format-qbank, .source-format-other { background: #6b7280; min-width: calc(86 * var(--rpx)); }
+.tag-row { width: 100%; display: flex; flex-wrap: wrap; gap: calc(8 * var(--rpx)); margin-top: calc(8 * var(--rpx)); }
+.tag-row .tag { margin: 0; }
+.bank-actions { width: 100%; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: calc(12 * var(--rpx)); padding: calc(18 * var(--rpx)) calc(22 * var(--rpx)); background: #f7fafb; border-top: calc(2 * var(--rpx)) solid #edf2f3; }
+.enter-btn, .delete-btn { width: 100%; min-width: 0; min-height: calc(72 * var(--rpx)); line-height: 1.3; padding: calc(14 * var(--rpx)) calc(10 * var(--rpx)); border-radius: calc(12 * var(--rpx)); font-size: calc(24 * var(--rpx)); white-space: normal; word-break: break-all; }
+.enter-btn { background: #e8f5f4; color: #176b87; }
+.delete-btn { background: #fff0f0; color: #b42318; }

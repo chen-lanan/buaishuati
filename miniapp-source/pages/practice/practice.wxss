@@ -1,0 +1,718 @@
+#page-root[data-page="pages/practice/practice"] {
+  height: calc(100vh - calc(104 * var(--rpx)) - env(safe-area-inset-top));
+  height: calc(100dvh - calc(104 * var(--rpx)) - env(safe-area-inset-top));
+  min-height: 0;
+  overflow: hidden;
+}
+
+.practice-page {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7f8;
+  overflow: hidden;
+}
+
+.topbar {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  padding: calc(20 * var(--rpx)) calc(14 * var(--rpx)) calc(10 * var(--rpx)) calc(22 * var(--rpx));
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: calc(8 * var(--rpx));
+  overflow: hidden;
+}
+.topbar-scroll-shell {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - calc(34 * var(--rpx))), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - calc(34 * var(--rpx))), transparent 100%);
+}
+.topbar-scroll {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: none;
+}
+.topbar-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.topbar-scroll-content {
+  min-width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10 * var(--rpx));
+  padding-right: calc(42 * var(--rpx));
+}
+.progress-text { flex: none; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.topbar-scroll-content > .tag { flex: none; margin: 0; white-space: nowrap; }
+.topbar-divider {
+  flex: none;
+  width: calc(2 * var(--rpx));
+  height: calc(44 * var(--rpx));
+  border-radius: calc(999 * var(--rpx));
+  background: var(--theme-divider, rgba(121,116,126,.24));
+}
+.favorite { flex: none; font-size: calc(44 * var(--rpx)); color: #e5a100; padding: 0 calc(6 * var(--rpx)); }
+.progress-track {
+  flex: none;
+  width: calc(100% - calc(40 * var(--rpx)));
+  height: calc(7 * var(--rpx));
+  margin: 0 calc(20 * var(--rpx)) calc(7 * var(--rpx));
+  border-radius: calc(999 * var(--rpx));
+  background: #dfe8eb;
+  overflow: hidden;
+}
+.progress-value {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #176b87;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .10s cubic-bezier(.2,.75,.25,1);
+  will-change: transform;
+}
+
+.question-viewport {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  padding: calc(18 * var(--rpx)) calc(20 * var(--rpx)) calc(14 * var(--rpx));
+}
+.question-card {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  background: #fff;
+  border-radius: calc(24 * var(--rpx));
+  padding: calc(18 * var(--rpx));
+  box-shadow: 0 calc(8 * var(--rpx)) calc(28 * var(--rpx)) rgba(23,107,135,.07);
+  line-height: 1.68;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--rpx));
+}
+
+.question-block {
+  flex: 0 1 auto;
+  min-height: calc(72 * var(--rpx));
+  max-height: 42%;
+  width: 100%;
+  padding: calc(18 * var(--rpx)) calc(18 * var(--rpx));
+  border: calc(2 * var(--rpx)) solid rgba(105, 137, 190, .14);
+  border-radius: calc(17 * var(--rpx));
+  background: #f9fbfd;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.has-answer .question-block { max-height: 25%; }
+.short-question.has-answer .question-block { max-height: 36%; }
+.question-text { width: 100%; max-width: 100%; font-weight: 650; color: #153c4b; white-space: pre-wrap; word-break: break-all; overflow-wrap: anywhere; }
+.question-image { width: 100%; margin-top: calc(16 * var(--rpx)); border-radius: calc(12 * var(--rpx)); }
+
+.options {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0 calc(2 * var(--rpx)) calc(4 * var(--rpx));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.has-answer .options { flex: 0 1 auto; max-height: 34%; }
+.option { width: 100%; min-width: 0; max-width: 100%; display: flex; align-items: flex-start; padding: calc(18 * var(--rpx)) calc(16 * var(--rpx)); background: #f7fafb; border: calc(2 * var(--rpx)) solid #e0e8eb; border-radius: calc(17 * var(--rpx)); margin-bottom: calc(12 * var(--rpx)); overflow: hidden; }
+.option.selected { border-color: #176b87; background: #edf8f7; }
+.option.correct { border-color: #1c9b6e; background: #eaf8f1; }
+.option.wrong { border-color: #d84a4a; background: #fff0f0; }
+.option-key { width: calc(54 * var(--rpx)); height: calc(54 * var(--rpx)); border-radius: 50%; background: #e4ecef; display: flex; align-items: center; justify-content: center; font-weight: 800; flex: none; margin-right: calc(14 * var(--rpx)); }
+.option.selected .option-key { background: #176b87; color: #fff; }
+.option.correct .option-key { background: #1c9b6e; color: #fff; }
+.option.wrong .option-key { background: #d84a4a; color: #fff; }
+.option-text { flex: 1; min-width: 0; max-width: 100%; padding-top: calc(2 * var(--rpx)); white-space: pre-wrap; word-break: break-all; overflow-wrap: anywhere; }
+.submit-btn { width: 100%; margin-top: calc(10 * var(--rpx)); }
+.short-area { flex: none; width: 100%; }
+.short-area .btn-secondary { width: 100%; }
+
+.result-zone {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--rpx));
+  overflow: hidden;
+}
+.feedback, .analysis, .answer-panel {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-radius: calc(16 * var(--rpx));
+  padding: calc(16 * var(--rpx)) calc(18 * var(--rpx));
+  background: #f5f8f9;
+  overflow-x: hidden;
+}
+.feedback { flex: 0 1 auto; min-height: calc(76 * var(--rpx)); max-height: 24%; overflow-y: auto; }
+.answer-panel, .analysis {
+  flex: 0 1 auto;
+  min-height: calc(68 * var(--rpx));
+  max-height: 31%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.short-question .answer-panel, .short-question .analysis { max-height: 38%; }
+.feedback-title, .analysis-title, .answer-title { font-weight: 800; margin-bottom: calc(8 * var(--rpx)); }
+.answer-line { color: #526870; word-break: break-all; overflow-wrap: anywhere; }
+.answer-panel { background: #eef8f8; border-left: calc(7 * var(--rpx)) solid #176b87; }
+.answer-text, .analysis-text { width: 100%; max-width: 100%; white-space: pre-wrap; line-height: 1.72; word-break: break-all; overflow-wrap: anywhere; }
+
+.self-score { flex: none; width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(10 * var(--rpx)); margin-top: 0; }
+.score-btn { width: 100%; min-width: 0; max-width: 100%; min-height: calc(66 * var(--rpx)); font-size: calc(23 * var(--rpx)); line-height: 1.25; padding: calc(12 * var(--rpx)) calc(6 * var(--rpx)); border-radius: calc(12 * var(--rpx)); white-space: normal; word-break: break-all; overflow: hidden; }
+.mastered { background: #e7f7ef; color: #117052; }
+.vague { background: #fff5df; color: #925800; }
+.unknown { background: #fff0f0; color: #b42318; }
+.source { flex: none; width: 100%; max-width: 100%; color: #82949b; font-size: calc(22 * var(--rpx)); margin-top: 0; white-space: normal; word-break: break-all; overflow-wrap: anywhere; }
+.memory-tag { background: #fff2c7; color: #8a5900; }
+.memory-option { pointer-events: none; }
+.memory-rating { flex: none; width: 100%; min-width: 0; padding-top: calc(12 * var(--rpx)); border-top: calc(2 * var(--rpx)) dashed #dce5e8; overflow: hidden; }
+.memory-title { width: 100%; font-weight: 750; color: #465f69; margin-bottom: calc(10 * var(--rpx)); word-break: break-all; }
+.score-btn.rated { outline: calc(4 * var(--rpx)) solid #176b87; font-weight: 800; }
+.auto-next-hint { flex: none; width: 100%; text-align: center; color: #176b87; font-size: calc(24 * var(--rpx)); word-break: break-all; }
+
+.bottom-actions {
+  flex: none;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: calc(14 * var(--rpx));
+  padding: calc(14 * var(--rpx)) calc(20 * var(--rpx)) calc(calc(14 * var(--rpx)) + env(safe-area-inset-bottom) + var(--answer-bottom-lift, 0px));
+  background: rgba(255,255,255,.96);
+  border-top: calc(2 * var(--rpx)) solid #e8edef;
+  box-shadow: 0 calc(-10 * var(--rpx)) calc(28 * var(--rpx)) rgba(55, 75, 110, .08);
+  overflow: hidden;
+}
+.nav-btn { width: 100%; min-width: 0; max-width: 100%; height: calc(80 * var(--rpx)); line-height: calc(80 * var(--rpx)); padding: 0 calc(8 * var(--rpx)); background: #edf3f5; color: #31515e; border-radius: calc(14 * var(--rpx)); overflow: hidden; white-space: nowrap; font-size: calc(29 * var(--rpx)); }
+.nav-btn.primary { background: #176b87; color: #fff; }
+.nav-btn[disabled] { opacity: .45; }
+
+.question-block::-webkit-scrollbar,
+.options::-webkit-scrollbar,
+.answer-panel::-webkit-scrollbar,
+.analysis::-webkit-scrollbar,
+.feedback::-webkit-scrollbar { width: 0; height: 0; }
+
+
+/* v1.3.4：提交后优先利用剩余高度，长内容只在各自区域滚动。 */
+.has-answer .question-block {
+  flex: 0 1 auto;
+  max-height: 24%;
+}
+.has-answer .options {
+  flex: 0 1 auto;
+  max-height: 38%;
+}
+.result-zone {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.result-zone .feedback {
+  flex: 0 0 auto;
+  max-height: 26%;
+}
+.result-zone .answer-panel,
+.result-zone .analysis {
+  flex: 1 1 0;
+  min-height: calc(94 * var(--rpx));
+  max-height: none;
+}
+.result-zone .answer-panel {
+  display: block;
+}
+.result-zone .analysis {
+  display: block;
+}
+.result-zone .answer-text,
+.result-zone .analysis-text {
+  padding-bottom: calc(8 * var(--rpx));
+}
+
+
+/* v1.4.3 按当前题目的题干、选项、答案与解析动态分配高度。 */
+.adaptive-layout .question-block {
+  flex: 0 1 auto !important;
+  min-height: calc(68 * var(--rpx));
+  max-height: none;
+}
+.adaptive-layout .options,
+.adaptive-layout.has-answer .options {
+  flex: 1 1 auto !important;
+  min-height: calc(88 * var(--rpx));
+  max-height: none;
+}
+.adaptive-layout .result-zone {
+  flex: 0 1 auto !important;
+  min-height: 0;
+  max-height: 62%;
+  overflow: hidden;
+}
+.adaptive-layout .result-zone .feedback {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: calc(126 * var(--rpx));
+}
+.adaptive-layout .result-zone .answer-panel,
+.adaptive-layout .result-zone .analysis {
+  flex: 0 1 auto !important;
+  min-height: 0 !important;
+  max-height: none;
+  display: block;
+}
+.adaptive-layout .answer-panel.compact-answer {
+  min-height: calc(66 * var(--rpx)) !important;
+  padding: calc(11 * var(--rpx)) calc(16 * var(--rpx));
+}
+.adaptive-layout .compact-answer .answer-title {
+  margin-bottom: calc(3 * var(--rpx));
+  font-size: .92em;
+}
+.adaptive-layout .compact-answer .answer-text {
+  line-height: 1.45;
+}
+.adaptive-layout .answer-panel.long-answer,
+.adaptive-layout .analysis {
+  min-height: calc(82 * var(--rpx)) !important;
+}
+.adaptive-layout .memory-rating {
+  padding-top: calc(8 * var(--rpx));
+}
+.adaptive-layout .memory-title {
+  margin-bottom: calc(7 * var(--rpx));
+}
+.adaptive-layout .score-btn {
+  min-height: calc(60 * var(--rpx));
+}
+
+
+/* v1.4.6：使用运行时真实 DOM 测量，不再用百分比或估算 rpx 截断内容。 */
+.adaptive-layout {
+  justify-content: flex-start !important;
+  gap: calc(12 * var(--rpx)) !important;
+  padding: calc(16 * var(--rpx)) !important;
+}
+.adaptive-layout > .question-block,
+.adaptive-layout > .options,
+.adaptive-layout > .short-area,
+.adaptive-layout > .result-zone,
+.adaptive-layout .result-zone > .answer-panel,
+.adaptive-layout .result-zone > .analysis {
+  flex: 0 0 auto !important;
+  max-height: none;
+}
+.adaptive-layout .result-zone {
+  max-height: none !important;
+  overflow: hidden !important;
+  gap: calc(10 * var(--rpx)) !important;
+}
+.adaptive-layout .question-block {
+  padding: calc(16 * var(--rpx)) calc(18 * var(--rpx));
+  min-height: 0 !important;
+}
+.adaptive-layout .options {
+  min-height: 0 !important;
+  padding-bottom: 0;
+}
+.adaptive-layout .option {
+  padding: calc(15 * var(--rpx)) calc(15 * var(--rpx));
+  margin-bottom: calc(10 * var(--rpx));
+}
+.adaptive-layout .option-key {
+  width: calc(52 * var(--rpx));
+  height: calc(52 * var(--rpx));
+}
+.adaptive-layout .feedback {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: calc(12 * var(--rpx)) calc(16 * var(--rpx));
+  overflow: hidden !important;
+}
+.adaptive-layout .feedback-title,
+.adaptive-layout .answer-title,
+.adaptive-layout .analysis-title {
+  margin-bottom: calc(5 * var(--rpx));
+}
+.adaptive-layout .answer-panel,
+.adaptive-layout .analysis {
+  min-height: 0 !important;
+  padding: calc(13 * var(--rpx)) calc(17 * var(--rpx));
+}
+.adaptive-layout .answer-panel.compact-answer {
+  min-height: 0 !important;
+  padding: calc(10 * var(--rpx)) calc(16 * var(--rpx));
+}
+.adaptive-layout .compact-answer .answer-text { line-height: 1.38; }
+.adaptive-layout .answer-panel.long-answer .answer-text,
+.adaptive-layout .analysis-text { line-height: 1.66; }
+.adaptive-layout .memory-rating {
+  padding-top: calc(8 * var(--rpx));
+  flex: 0 0 auto;
+}
+.adaptive-layout .memory-title { margin-bottom: calc(7 * var(--rpx)); }
+.adaptive-layout .score-btn { min-height: calc(58 * var(--rpx)); }
+.adaptive-layout .section-scrollable {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* v1.4.9：答案与反馈卡片使用纯净边框，去除 WebView 中叠加阴影形成的灰色底条。 */
+#page-root[data-page="pages/practice/practice"] .feedback,
+#page-root[data-page="pages/practice/practice"] .answer-panel,
+#page-root[data-page="pages/practice/practice"] .analysis {
+  box-shadow: none !important;
+  filter: none !important;
+  background-clip: padding-box;
+  border: calc(2 * var(--rpx)) solid rgba(112, 139, 180, .15);
+}
+#page-root[data-page="pages/practice/practice"] .answer-panel {
+  border-left: calc(6 * var(--rpx)) solid #77aa9b;
+  background: #f8fcfa;
+}
+#page-root[data-page="pages/practice/practice"] .feedback {
+  background: #fbfcfd;
+}
+#page-root[data-page="pages/practice/practice"] .result-zone {
+  padding-bottom: 0 !important;
+}
+
+.question-tools { flex: none; margin-left: 0; display: flex; align-items: center; gap: calc(6 * var(--rpx)); }
+.master-question-btn { min-height: calc(54 * var(--rpx)); line-height: 1; padding: 0 calc(16 * var(--rpx)); border-radius: calc(999 * var(--rpx)); background: rgba(224,244,234,.92); color: #28765d; border: calc(2 * var(--rpx)) solid rgba(79,154,123,.18); font-size: calc(23 * var(--rpx)); white-space: nowrap; }
+
+/* v1.6.7：练习答题卡与题目状态跳转。 */
+.sheet-open-btn {
+  flex: none;
+  min-width: calc(72 * var(--rpx));
+  height: calc(48 * var(--rpx));
+  line-height: calc(48 * var(--rpx));
+  padding: 0 calc(14 * var(--rpx));
+  margin: 0;
+  border-radius: calc(999 * var(--rpx));
+  background: rgba(114, 80, 142, .20);
+  color: #dcb9f6;
+  border: calc(2 * var(--rpx)) solid rgba(201, 151, 236, .28);
+  font-size: calc(22 * var(--rpx));
+  white-space: nowrap;
+}
+.edit-question-btn {
+  flex: none;
+  min-width: calc(72 * var(--rpx));
+  height: calc(48 * var(--rpx));
+  line-height: calc(48 * var(--rpx));
+  padding: 0 calc(14 * var(--rpx));
+  margin: 0;
+  border-radius: calc(999 * var(--rpx));
+  background: rgba(103, 116, 145, .16);
+  color: #7387b8;
+  border: calc(2 * var(--rpx)) solid rgba(113, 132, 176, .26);
+  font-size: calc(22 * var(--rpx));
+  white-space: nowrap;
+}
+.practice-sheet-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(0, 0, 0, .62);
+  padding-top: calc(env(safe-area-inset-top) + calc(80 * var(--rpx)));
+}
+.practice-sheet-panel {
+  width: 100%;
+  height: min(78vh, calc(1160 * var(--rpx)));
+  min-height: calc(620 * var(--rpx));
+  display: flex;
+  flex-direction: column;
+  padding: calc(24 * var(--rpx)) calc(24 * var(--rpx)) calc(calc(20 * var(--rpx)) + env(safe-area-inset-bottom));
+  border-radius: calc(30 * var(--rpx)) calc(30 * var(--rpx)) 0 0;
+  background: #101011;
+  border: calc(2 * var(--rpx)) solid rgba(255, 255, 255, .11);
+  box-shadow: 0 calc(-20 * var(--rpx)) calc(60 * var(--rpx)) rgba(0, 0, 0, .42);
+  overflow: hidden;
+}
+.practice-sheet-header { flex: none; display: flex; align-items: center; justify-content: space-between; gap: calc(16 * var(--rpx)); }
+.practice-sheet-controls { flex: none; min-height: 0; }
+.practice-sheet-title { font-size: calc(34 * var(--rpx)); font-weight: 800; }
+.practice-sheet-subtitle { margin-top: calc(5 * var(--rpx)); color: #909098; font-size: calc(22 * var(--rpx)); }
+.practice-sheet-close {
+  width: calc(58 * var(--rpx)); height: calc(58 * var(--rpx)); line-height: calc(54 * var(--rpx)); padding: 0; margin: 0;
+  border-radius: 50%; background: #232326; color: #eee; font-size: calc(36 * var(--rpx));
+}
+.practice-sheet-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(12 * var(--rpx)); margin: calc(22 * var(--rpx)) 0 calc(18 * var(--rpx)); }
+.sheet-summary-item { min-width: 0; padding: calc(14 * var(--rpx)) calc(8 * var(--rpx)); border-radius: calc(14 * var(--rpx)); text-align: center; font-size: calc(23 * var(--rpx)); font-weight: 700; }
+.sheet-summary-item.sheet-correct { background: rgba(25, 139, 94, .22); color: #75d7ad; }
+.sheet-summary-item.sheet-wrong { background: rgba(190, 57, 57, .22); color: #ff9c9c; }
+.sheet-summary-item.sheet-unanswered { background: #232326; color: #b7b7bf; }
+.practice-sheet-scroll {
+  flex: 1 1 0;
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scrollbar-width: none;
+}
+.practice-sheet-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.practice-sheet-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: calc(12 * var(--rpx)); padding: calc(4 * var(--rpx)) calc(2 * var(--rpx)) calc(22 * var(--rpx)); }
+.practice-sheet-number {
+  min-width: 0;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(12 * var(--rpx));
+  font-size: calc(22 * var(--rpx));
+  font-variant-numeric: tabular-nums;
+  border: calc(2 * var(--rpx)) solid transparent;
+}
+.practice-sheet-number.sheet-correct { background: #176f50; color: #fff; }
+.practice-sheet-number.sheet-wrong { background: #8f2525; color: #fff; }
+.practice-sheet-number.sheet-unanswered { background: #29292d; color: #bdbdc5; }
+.practice-sheet-number-label {
+  width: calc(48 * var(--rpx));
+  height: calc(48 * var(--rpx));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: calc(3 * var(--rpx)) solid transparent;
+  border-radius: calc(9 * var(--rpx));
+  box-sizing: border-box;
+  line-height: 1;
+}
+.practice-sheet-number.sheet-number-long .practice-sheet-number-label { font-size: calc(18 * var(--rpx)); }
+.practice-sheet-number-label.sheet-current-marker {
+  border-color: #d6a9f3;
+  background: rgba(193, 130, 233, .16);
+  box-shadow: 0 0 0 calc(2 * var(--rpx)) rgba(193, 130, 233, .10);
+}
+.practice-sheet-legend { flex: none; padding-top: calc(14 * var(--rpx)); color: #8f8f98; font-size: calc(20 * var(--rpx)); text-align: center; }
+
+/* Excel 题库：难度标签与图片选项/答案 */
+.difficulty-tag { opacity: .9; }
+.option-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(12 * var(--rpx)); }
+.option-image, .answer-image { display: block; width: 100%; max-width: 100%; border-radius: calc(12 * var(--rpx)); object-fit: contain; }
+.answer-image + .answer-image { margin-top: calc(12 * var(--rpx)); }
+
+
+/* v1.7.3：单选/判断保持圆形，多选改为圆角方形；仅轻微增强边框。 */
+#page-root[data-page="pages/practice/practice"] .option-key {
+  border: calc(2 * var(--rpx)) solid rgba(151, 164, 192, .30) !important;
+  box-shadow: inset 0 0 0 calc(1 * var(--rpx)) rgba(255, 255, 255, .045);
+}
+#page-root[data-page="pages/practice/practice"] .single-choice .option-key {
+  border-radius: 50% !important;
+}
+#page-root[data-page="pages/practice/practice"] .multiple-choice .option-key {
+  border-radius: calc(10 * var(--rpx)) !important;
+}
+#page-root[data-page="pages/practice/practice"] .option.selected .option-key,
+#page-root[data-page="pages/practice/practice"] .option.correct .option-key,
+#page-root[data-page="pages/practice/practice"] .option.wrong .option-key {
+  border-color: rgba(255, 255, 255, .24) !important;
+}
+
+/* v1.7.4：图片题按选项分别显示，隐藏无信息量的“图形”占位文字。 */
+#page-root[data-page="pages/practice/practice"] .question-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 52vh;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  background: #fff;
+  padding: calc(6 * var(--rpx));
+  box-sizing: border-box;
+}
+#page-root[data-page="pages/practice/practice"] .visual-option {
+  align-items: center;
+  min-height: calc(170 * var(--rpx));
+}
+#page-root[data-page="pages/practice/practice"] .visual-option .option-content {
+  align-items: center;
+  justify-content: center;
+}
+#page-root[data-page="pages/practice/practice"] .visual-option .option-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(240 * var(--rpx));
+  margin: 0 auto;
+  object-fit: contain;
+  background: #fff;
+  border-radius: calc(10 * var(--rpx));
+  padding: calc(6 * var(--rpx));
+  box-sizing: border-box;
+}
+
+
+/* v1.7.5：所有带图片选项统一按原始比例显示，文字存在时也禁止放大低分辨率图片。 */
+#page-root[data-page="pages/practice/practice"] .image-option .option-content {
+  width: 100%;
+  align-items: flex-start;
+}
+#page-root[data-page="pages/practice/practice"] .image-option .option-image,
+#page-root[data-page="pages/practice/practice"] .visual-option .option-image {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: calc(280 * var(--rpx)) !important;
+  align-self: center;
+  margin: calc(4 * var(--rpx)) auto 0;
+  object-fit: contain;
+  background: #fff;
+  border-radius: calc(10 * var(--rpx));
+  padding: calc(6 * var(--rpx));
+  box-sizing: border-box;
+}
+#page-root[data-page="pages/practice/practice"] .image-option .option-text {
+  width: 100%;
+  padding-right: calc(4 * var(--rpx));
+}
+#page-root[data-page="pages/practice/practice"] .answer-image {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: calc(560 * var(--rpx));
+  margin: calc(10 * var(--rpx)) auto 0;
+  object-fit: contain;
+  background: #fff;
+  padding: calc(6 * var(--rpx));
+  box-sizing: border-box;
+}
+
+#page-root[data-page="pages/practice/practice"] .analysis-image {
+  display:block; width:auto !important; height:auto !important; max-width:100% !important; max-height:calc(560 * var(--rpx)); margin:calc(10 * var(--rpx)) auto 0; object-fit:contain; background:#fff; padding:calc(6 * var(--rpx)); box-sizing:border-box; border-radius:calc(10 * var(--rpx));
+}
+
+/* v1.8.5：答题卡状态与题型可叠加筛选；底色表示作答状态，莫奈色粗边框表示题型。 */
+.practice-sheet-summary .sheet-summary-item { cursor: pointer; border: calc(2 * var(--rpx)) solid transparent; }
+.practice-sheet-summary .sheet-summary-item.filter-active {
+  border-color: rgba(255,255,255,.78);
+  box-shadow: 0 0 0 calc(3 * var(--rpx)) rgba(255,255,255,.12);
+}
+.practice-sheet-type-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(12 * var(--rpx));
+  margin: 0 0 calc(12 * var(--rpx));
+  font-size: calc(22 * var(--rpx));
+  font-weight: 750;
+}
+.practice-sheet-filter-count { color: #909098; font-size: calc(20 * var(--rpx)); font-weight: 500; }
+.practice-sheet-type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(10 * var(--rpx));
+  margin-bottom: calc(14 * var(--rpx));
+}
+.practice-sheet-type-item {
+  --sheet-type-color: #7c9ae6;
+  min-width: 0;
+  min-height: calc(58 * var(--rpx));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(7 * var(--rpx)) calc(5 * var(--rpx));
+  border: calc(4 * var(--rpx)) solid var(--sheet-type-color);
+  border-radius: calc(12 * var(--rpx));
+  background: rgba(255,255,255,.035);
+  color: #dedee6;
+  font-size: calc(20 * var(--rpx));
+  font-weight: 750;
+  line-height: 1.15;
+  text-align: center;
+  word-break: keep-all;
+}
+.practice-sheet-type-item.filter-active {
+  background: rgba(114, 80, 142, .20);
+  box-shadow: 0 0 0 calc(3 * var(--rpx)) rgba(193, 130, 233, .18);
+}
+.practice-sheet-filter-note {
+  flex: none;
+  margin: 0 0 calc(12 * var(--rpx));
+  padding: calc(8 * var(--rpx));
+  border-radius: calc(10 * var(--rpx));
+  background: rgba(118, 105, 145, .16);
+  color: #c8b8e6;
+  font-size: calc(20 * var(--rpx));
+  text-align: center;
+}
+.practice-sheet-empty {
+  padding: calc(70 * var(--rpx)) calc(20 * var(--rpx));
+  color: #8f8f98;
+  text-align: center;
+  font-size: calc(22 * var(--rpx));
+}
+.practice-sheet-number {
+  --sheet-type-color: #7c9ae6;
+  border-width: calc(4 * var(--rpx));
+  border-color: var(--sheet-type-color);
+}
+.practice-sheet-number.sheet-current { border-color: var(--sheet-type-color); box-shadow: none; outline: none; }
+.practice-sheet-current-note {
+  margin: calc(-2 * var(--rpx)) 0 calc(10 * var(--rpx));
+  color: #c8b8e6;
+  font-size: calc(19 * var(--rpx));
+  text-align: center;
+}
+.sheet-type-single { --sheet-type-color: #7c9ae6; }
+.sheet-type-multiple { --sheet-type-color: #b487e8; }
+.sheet-type-judge { --sheet-type-color: #e3b55d; }
+.sheet-type-fill { --sheet-type-color: #5dbcd2; }
+.sheet-type-short { --sheet-type-color: #d987b5; }
+.sheet-type-calc { --sheet-type-color: #e08a5b; }
+.sheet-type-drawing { --sheet-type-color: #8c9ddf; }
+.sheet-type-other-0 { --sheet-type-color: #c68bd6; }
+.sheet-type-other-1 { --sheet-type-color: #6fa6dc; }
+.sheet-type-other-2 { --sheet-type-color: #d5a06d; }
+
+@media (max-width: 360px) {
+  .practice-sheet-type-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+
+
+/* v2.0.1：材料题公共题干。材料随子题显示，但不重复写入题干正文。 */
+.material-card { margin: 0 0 calc(16 * var(--rpx)); padding: calc(16 * var(--rpx)) calc(18 * var(--rpx)); border-radius: calc(14 * var(--rpx)); background: var(--theme-surface-high, rgba(127,127,127,.07)); border: calc(2 * var(--rpx)) solid var(--theme-card-border, rgba(128,128,128,.18)); }
+.material-label { margin-bottom: calc(8 * var(--rpx)); color: var(--theme-accent, #405b9c); font-size: calc(22 * var(--rpx)); font-weight: 800; }
+.material-text { color: var(--theme-text, inherit); font-size: .92em; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.material-image { display:block; max-width:100%; margin: calc(10 * var(--rpx)) auto 0; border-radius: calc(10 * var(--rpx)); }

@@ -1,0 +1,69 @@
+<view class="container safe-bottom">
+  <view class="hero">
+    <view class="hero-title">不爱刷题</view>
+    <view class="hero-desc">题库、错题、收藏和进度全部保存在本机，不上传服务器。</view>
+    <view class="hero-stats">
+      <view class="hero-stat">
+        <text class="number">{{summary.questionCount || 0}}</text>
+        <text>题目</text>
+      </view>
+      <view class="hero-stat">
+        <text class="number">{{summary.answered || 0}}</text>
+        <text>已答</text>
+      </view>
+      <view class="hero-stat">
+        <text class="number">{{summary.accuracy || 0}}%</text>
+        <text>正确率</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="grid-2 action-grid">
+    <view class="action-card primary" bindtap="goImport">
+      <view class="action-icon">＋</view>
+      <view class="action-title">导入题库</view>
+      <view class="action-desc">支持 DOC/DOCX、XLS/XLSX、PDF、TXT 等</view>
+    </view>
+    <view class="action-card" bindtap="goBanks">
+      <view class="action-icon">▤</view>
+      <view class="action-title">题库管理</view>
+      <view class="action-desc">{{summary.bankCount || 0}} 个题库</view>
+    </view>
+    <view class="action-card" bindtap="goWrong">
+      <view class="action-icon">×</view>
+      <view class="action-title">错题本</view>
+      <view class="action-desc">{{summary.wrongCount || 0}} 道待掌握</view>
+    </view>
+    <view class="action-card" bindtap="goFavorites">
+      <view class="action-icon">☆</view>
+      <view class="action-title">收藏题目</view>
+      <view class="action-desc">{{summary.favoriteCount || 0}} 道收藏</view>
+    </view>
+  </view>
+
+  <view class="action-card mastered-card" bindtap="goMastered">
+    <view class="mastered-card-icon">✓</view>
+    <view class="mastered-card-body">
+      <view class="action-title">已掌握</view>
+      <view class="action-desc">{{summary.masteredCount || 0}} 道已从练习和背题中移除，可随时恢复</view>
+    </view>
+    <view class="arrow">›</view>
+  </view>
+
+  <view class="section-title">最近题库</view>
+  <block wx:if="{{recentBanks.length}}">
+    <view class="card bank-card" wx:for="{{recentBanks}}" wx:key="id" data-id="{{item.id}}" bindtap="openBank">
+      <view class="bank-title-row">
+        <view class="bank-name {{item.nameSizeClass}}">{{item.name}}</view>
+        <view class="source-format-badge source-format-{{item.sourceFormat}}">{{item.sourceFormatLabel}}</view>
+      </view>
+      <view class="subtitle">{{item.questionCount}} 题 · 待检查 {{item.statusCounts.warning || 0}} · 失败 {{item.statusCounts.error || 0}}</view>
+    </view>
+  </block>
+  <view class="card empty-mini" wx:else>
+    <view>还没有题库</view>
+    <view class="subtitle">可先安装示例题库，再导入 Word、表格、PDF 或文本题库。</view>
+    <button class="btn-ghost demo-btn" bindtap="installDemo">安装示例题库</button>
+  </view>
+
+</view>
