@@ -2,16 +2,13 @@ name: Build APK
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
-
 
     steps:
 
@@ -26,21 +23,19 @@ jobs:
         java-version: 17
 
 
-    - name: Setup Android SDK
+    - name: Setup Android
       uses: android-actions/setup-android@v3
 
 
-    - name: Grant permission
-      run: chmod +x gradlew
-
-
-    - name: Build Release
+    - name: Build APK
+      working-directory: android
       run: |
+        chmod +x gradlew
         ./gradlew assembleRelease
 
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: buaishuati-release
-        path: app/build/outputs/apk/release/*.apk
+        name: apk
+        path: android/app/build/outputs/apk/release/*.apk
