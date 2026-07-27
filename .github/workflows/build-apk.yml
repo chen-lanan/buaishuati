@@ -31,7 +31,24 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - name: Create debug keystore
+      run: |
+        mkdir -p signing
+        keytool -genkeypair \
+          -keystore signing/release.jks \
+          -storepass android \
+          -keypass android \
+          -alias release \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -dname "CN=Android"
 
+
+    - name: Build Release APK
+      run: |
+        gradle assembleRelease
+        
     - name: Check project
       run: |
         ls -la
